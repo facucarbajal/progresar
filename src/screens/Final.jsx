@@ -94,12 +94,6 @@ export default function Final({ estado, dispatch }) {
               </p>
 
               <p className="text-[15px] leading-relaxed text-blanco">
-                En 2014, una beca Progresar alcanzaba para{' '}
-                <span className="font-pixel text-oro">34 kilos de yerba</span>. Hoy solo
-                alcanza para <span className="font-pixel text-oro">6 kilos</span>.
-              </p>
-
-              <p className="text-[15px] leading-relaxed text-blanco">
                 Hay una ley que obliga a Milei a duplicar la plata que ofrece el Progresar.
                 El presidente no la cumple. Es la misma ley que aumenta el sueldo de los
                 docentes universitarios.
@@ -113,9 +107,6 @@ export default function Final({ estado, dispatch }) {
 
             {/* Comparador 2015 vs 2026 */}
             <div className="w-full borde-pixel border-celeste/60 bg-noche/60 p-4">
-              <div className="font-pixel text-[11px] text-celeste/80 uppercase tracking-wide mb-3 text-center">
-                Lo que compraba la beca
-              </div>
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="font-pixel text-xs">

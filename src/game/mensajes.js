@@ -5,7 +5,7 @@ import { pesos } from './config.js'
 export function mensajeCierre({ estudio, comio, materia, noticia }) {
   const n = noticia ? ` ${noticia}` : ''
   if (estudio && comio) {
-    return `Cursaste, entendiste algo y hasta comiste.${n} Un lujo que con esta beca no vas a poder repetir muchas veces.`
+    return `Cursaste, entendiste algo y hasta comiste. Un lujo que con esta beca no vas a poder repetir muchas veces.${n}`
   }
   if (estudio && !comio) {
     return `Te sabés de memoria los capítulos 1, 2 y 3, pero no podés ni caminar del hambre.${n} Mañana será un nuevo día…`

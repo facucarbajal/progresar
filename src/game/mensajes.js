@@ -8,7 +8,7 @@ export function mensajeCierre({ estudio, comio, materia, noticia }) {
     return `Cursaste, entendiste algo y hasta comiste. Un lujo que con esta beca no vas a poder repetir muchas veces.${n}`
   }
   if (estudio && !comio) {
-    return `Te sabés de memoria los capítulos 1, 2 y 3, pero no podés ni caminar del hambre.${n} Mañana será un nuevo día…`
+    return `Te sabés de memoria los capítulos 1, 2 y 3, pero no podés ni caminar del hambre. Mañana será un nuevo día… ${noticia ?? ''}`.trim()
   }
   if (!estudio && comio) {
     return `Pegaste buena onda con el del comedor y te recomendó un par de cátedras. No leíste el cuadernillo y te la pasás mirando la serie de Moria.${n}`

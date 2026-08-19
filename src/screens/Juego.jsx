@@ -10,7 +10,7 @@ import { getCarrera } from '../game/carreras.js'
 import { DIAS } from '../game/dias.js'
 import { getUtil, COMIDA } from '../game/items.js'
 import { disponible } from '../game/state.js'
-import { pesos, CHANGA_MONTOS, CREDITOS } from '../game/config.js'
+import { pesos, CHANGA_MONTOS, CREDITOS, BECA, MP_INICIAL } from '../game/config.js'
 
 function sprite(energia) {
   if (energia <= 25) return '😩'
@@ -89,6 +89,11 @@ export default function Juego({ estado, dispatch }) {
 
   const esUltimoMomento = momentoIndex === diaDef.orden.length - 1
   const esParo = estado.paroDia === estado.diaIndex
+
+  // La oferta de plata (changa/crédito) aparece Mar/Mié/Jue, y sólo si ya
+  // gastaste más de la mitad de la plata que tenías al arrancar.
+  const mostrarOferta =
+    [1, 2, 3].includes(estado.diaIndex) && plata < (BECA + MP_INICIAL) / 2
 
   // Día de paro: no hay clase ni tienda. No se gasta un peso.
   if (esParo) {
@@ -220,8 +225,8 @@ export default function Juego({ estado, dispatch }) {
           </motion.div>
         </AnimatePresence>
 
-        {/* Changas y crédito (solo aparece un día al azar en la partida) */}
-        {estado.diaOfertaPlata === estado.diaIndex && (
+        {/* Changas y crédito (Mar/Mié/Jue y solo si gastaste más de la mitad) */}
+        {mostrarOferta && (
         <div className="borde-pixel border-blanco/40 bg-noche/50 p-3 flex flex-col gap-2">
           <div className="font-pixel text-[11px] text-celeste/80 uppercase tracking-wide">
             🤝 ¿Necesitás plata?

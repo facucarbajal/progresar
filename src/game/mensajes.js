@@ -13,7 +13,7 @@ export function mensajeCierre({ estudio, comio, materia, noticia }) {
   if (!estudio && comio) {
     return `Pegaste buena onda con el del comedor y te recomendó un par de cátedras. No leíste el cuadernillo y te la pasás mirando la serie de Moria.${n}`
   }
-  return `Te dormís en ${materia}. Un compañero te da un mate y revivís.${n} No tenés ni una lapicera y el profesor ya te tomó de punto.`
+  return `Te dormís en ${materia}. Un compañero te da un mate y revivís. No tenés ni una lapicera y el profesor ya te tomó de punto.${n}`
 }
 
 // Remates por carrera para el final "sin plata" (el del boleto). Rotan al azar.

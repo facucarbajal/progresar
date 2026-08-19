@@ -3,16 +3,16 @@ import { pesos } from '../game/config.js'
 import BotonPixel from './BotonPixel.jsx'
 
 // Tarjeta de un producto simple (útil o comida).
+// El botón de comprar SIEMPRE aparece; si no te alcanza queda deshabilitado y
+// con menos opacidad. El precio va al lado del "Comprar".
 export function ProductoCard({
   emoji,
   nombre,
   costo,
-  energia, // opcional (comida)
   requerido = false,
   comprado = false,
   alcanza = true,
   onComprar,
-  textoBoton = 'Comprar',
 }) {
   return (
     <motion.div
@@ -21,33 +21,21 @@ export function ProductoCard({
         comprado ? 'border-verde/70' : requerido ? 'border-oro/70' : 'border-blanco/40'
       }`}
     >
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex flex-col">
-          <span className="text-sm sm:text-base leading-tight">
-            {emoji} {nombre}
-          </span>
-        </div>
-        <span
-          className={`font-pixel text-[11px] whitespace-nowrap ${
-            alcanza || comprado ? 'text-oro' : 'text-rojo'
-          }`}
-        >
-          {pesos(costo)}
-        </span>
-      </div>
+      <span className="text-sm sm:text-base leading-tight">
+        {emoji} {nombre}
+      </span>
 
       {comprado ? (
-        <div className="font-pixel text-[10px] text-verde">✓ Comprado</div>
-      ) : alcanza ? (
-        <BotonPixel
-          variante={requerido ? 'oro' : 'primario'}
-          onClick={onComprar}
-          className="w-full !py-2"
-        >
-          {textoBoton}
-        </BotonPixel>
+        <div className="font-pixel text-[11px] text-verde">✓ Comprado</div>
       ) : (
-        <div className="font-pixel text-[9px] text-rojo/90">✗ No te alcanza</div>
+        <BotonPixel
+          variante="comprar"
+          onClick={onComprar}
+          disabled={!alcanza}
+          className="w-full !py-2 flex items-center justify-center gap-2"
+        >
+          Comprar <span className="opacity-90">·</span> {pesos(costo)}
+        </BotonPixel>
       )}
     </motion.div>
   )

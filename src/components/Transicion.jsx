@@ -28,9 +28,15 @@ export default function Transicion({ transicion, diasSinComer, onContinuar }) {
           </p>
         )}
 
-        <div className="borde-pixel border-celeste/60 bg-noche/60 px-4 py-2 text-base sm:text-lg text-celeste">
-          🚌 Pagaste {pesos(transicion.boleto)} de SUBE para llegar mañana.
-        </div>
+        {transicion.boleto > 0 ? (
+          <div className="borde-pixel border-celeste/60 bg-noche/60 px-4 py-2 text-base sm:text-lg text-celeste">
+            🚌 Pagaste {pesos(transicion.boleto)} de SUBE para llegar mañana.
+          </div>
+        ) : (
+          <div className="borde-pixel border-naranja/60 bg-noche/60 px-4 py-2 text-base sm:text-lg text-naranja">
+            ✊ Mañana hay paro: no viajás, no gastás SUBE.
+          </div>
+        )}
 
         <div className="borde-pixel border-celeste bg-pizarra/70 shadow-pixel px-5 py-3">
           <div className="font-pixel text-xs text-celeste">Arranca</div>

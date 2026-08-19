@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import BotonPixel from '../components/BotonPixel.jsx'
-import LogoProgresar from '../components/LogoProgresar.jsx'
 
 // Pantalla de inicio con el copy del pedido y el botón "Jugar".
 export default function Landing({ onJugar }) {
@@ -12,9 +11,7 @@ export default function Landing({ onJugar }) {
         transition={{ duration: 0.4 }}
         className="w-full max-w-2xl flex flex-col items-center text-center gap-6"
       >
-        <LogoProgresar size="lg" />
-
-        <div className="text-5xl sm:text-6xl">🎓</div>
+        <div className="text-6xl sm:text-7xl">🎓</div>
 
         <h1 className="font-titulo text-2xl sm:text-4xl leading-tight text-oro sombra-texto">
           ¡Felicitaciones!

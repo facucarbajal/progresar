@@ -36,13 +36,25 @@ export const estadoInicial = {
   estudioAlguna: false, // ¿compró algún cuadernillo en toda la partida?
   comprasTotal: 0, // cantidad de cosas efectivamente compradas
   motivoFinal: null, // 'hambre' | 'sin_plata' | 'academico' | 'fin_semana'
+  paroDia: null, // índice del día de paro (1=Martes o 2=Miércoles), o null
   dia: diaLimpio(),
   transicion: null,
+}
+
+// ~40% de las partidas tienen un día de paro, martes o miércoles al azar.
+function sortearParo() {
+  if (Math.random() >= 0.4) return null
+  return Math.random() < 0.5 ? 1 : 2
 }
 
 // Plata total disponible (beca + lo poco de MP).
 export function disponible(estado) {
   return estado.beca + estado.mp
+}
+
+// ¿El día actual es de paro? Ese día no se gasta un peso.
+function esParo(estado) {
+  return estado.paroDia === estado.diaIndex
 }
 
 // Descuenta un monto: primero de la beca, después de Mercado Pago.
@@ -55,7 +67,7 @@ function gastar(estado, monto) {
 function nuevaPartida(carreraId) {
   // El lunes NO se cobra SUBE: con los $28.000 tenés que poder comprar el
   // material y la comida del primer día. El boleto pega a partir del martes.
-  return { ...estadoInicial, pantalla: 'juego', carreraId }
+  return { ...estadoInicial, pantalla: 'juego', carreraId, paroDia: sortearParo() }
 }
 
 export function reducer(estado, accion) {
@@ -69,6 +81,7 @@ export function reducer(estado, accion) {
     // Compra un útil de cursada. slotId opcional (si es requerido).
     case 'COMPRAR_UTIL': {
       const { util, slotId } = accion
+      if (esParo(estado)) return estado
       if (estado.dia.comprados[util.id]) return estado
       if (disponible(estado) < util.costo) return estado
       const wallets = gastar(estado, util.costo)
@@ -86,6 +99,7 @@ export function reducer(estado, accion) {
 
     // Compra el cuadernillo del día. version: 'original' | 'impreso'.
     case 'COMPRAR_CUADERNILLO': {
+      if (esParo(estado)) return estado
       if (estado.dia.slots.cuadernillo) return estado // ya lo tenés
       if (disponible(estado) < accion.costo) return estado
       const wallets = gastar(estado, accion.costo)
@@ -125,6 +139,7 @@ export function reducer(estado, accion) {
     // Comprar comida (objetivo personal). Se puede comer varias veces.
     case 'COMER': {
       const { comida } = accion
+      if (esParo(estado)) return estado
       if (disponible(estado) < comida.costo) return estado
       const wallets = gastar(estado, comida.costo)
       return {
@@ -152,15 +167,20 @@ export function reducer(estado, accion) {
         .materiales[estado.diaIndex].materia
       const estudio = !!estado.dia.slots.cuadernillo
       const comio = estado.dia.comioHoy
+      const esParoHoy = estado.paroDia === estado.diaIndex
 
-      // 1) Hambre: 3 días sin comer → te desmayás (se revela al pasar de día).
-      const diasSinComer = comio ? 0 : estado.diasSinComer + 1
-      const energia = Math.max(
-        0,
-        estado.energia - DRENAJE_DIARIO - (comio ? 0 : PENALIDAD_NO_COMER),
-      )
-      if (diasSinComer >= DIAS_SIN_COMER_LIMITE || energia <= 0) {
-        return { ...estado, energia, diasSinComer, pantalla: 'final', motivoFinal: 'hambre' }
+      // 1) Hambre: sólo cuenta en días normales. En el paro descansás en casa.
+      let diasSinComer = estado.diasSinComer
+      let energia = estado.energia
+      if (!esParoHoy) {
+        diasSinComer = comio ? 0 : estado.diasSinComer + 1
+        energia = Math.max(
+          0,
+          estado.energia - DRENAJE_DIARIO - (comio ? 0 : PENALIDAD_NO_COMER),
+        )
+        if (diasSinComer >= DIAS_SIN_COMER_LIMITE || energia <= 0) {
+          return { ...estado, energia, diasSinComer, pantalla: 'final', motivoFinal: 'hambre' }
+        }
       }
 
       const siguiente = estado.diaIndex + 1
@@ -176,8 +196,8 @@ export function reducer(estado, accion) {
         }
       }
 
-      // 3) SUBE de mañana: si no te alcanza el boleto, se acabó.
-      const boleto = BOLETOS[siguiente]
+      // 3) SUBE de mañana (gratis si mañana es paro: no viajás).
+      const boleto = siguiente === estado.paroDia ? 0 : BOLETOS[siguiente]
       if (disponible(estado) < boleto) {
         return {
           ...estado,
@@ -201,8 +221,10 @@ export function reducer(estado, accion) {
         transicion: {
           finalizado: diaDef.nombre,
           siguiente: DIAS[siguiente].nombre,
-          cierre: mensajeCierre({ estudio, comio, materia }),
-          comio,
+          cierre: esParoHoy
+            ? 'Hoy no hubo clases por el paro. Por lo menos no gastaste un peso.'
+            : mensajeCierre({ estudio, comio, materia }),
+          comio: esParoHoy ? true : comio,
           boleto,
         },
       }

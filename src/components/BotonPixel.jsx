@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 
 const VARIANTES = {
   primario: 'bg-celeste text-noche border-blanco hover:bg-celeste/90',
+  comprar: 'bg-verde text-noche border-blanco hover:bg-verde/90',
   oro: 'bg-oro text-noche border-blanco hover:bg-oro/90',
   peligro: 'bg-rojo text-blanco border-blanco hover:bg-rojo/90',
   fantasma: 'bg-transparent text-blanco border-blanco hover:bg-blanco/10',

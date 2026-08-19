@@ -59,7 +59,7 @@ export function textoFinal({ motivo, diaNombre, carreraId, comprasTotal, diasCur
         titulo: 'Se te acabó la beca',
         cuerpo: `Es ${diaNombre}, aumentó el boleto y ya no te queda plata para la SUBE. Preferís jugarte los ${pesos(
           plata,
-        )} que te quedaron a que gana Boca. Encontrás un laburo de 8hs en un kiosco por $350.000. ${
+        )} que te quedaron a que gana Boca. Pensás en pedir un crédito en Mercado Pago, pero todavía estás pagando el anterior. Encontrás un laburo de 8hs en un kiosco por $350.000. ${
           REMATE_CARRERA[carreraId] ?? ''
         }`,
         stats,

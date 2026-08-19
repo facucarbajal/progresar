@@ -18,8 +18,8 @@ export const CARRERAS = [
     nombre: 'Derecho',
     emoji: '⚖️',
     materiales: [
-      mat('Cuadernillo de Constitucional', 'Derecho Constitucional', 12000),
-      mat('Fotocopias del Código Civil', 'Civil I', 9000),
+      mat('Código Civil y Comercial', 'Civil y Comercial', 12000),
+      mat('Fotocopias de Constitucional', 'Derecho Constitucional', 9000),
       mat('Apunte de Penal', 'Penal I', 15000),
       mat('Cuadernillo de Procesal', 'Procesal I', 10000),
       mat('Fotocopias de Derecho Romano', 'Derecho Romano', 13000),
@@ -42,10 +42,10 @@ export const CARRERAS = [
     nombre: 'Artes',
     emoji: '🎨',
     materiales: [
-      mat('Cuadernillo de Pintura', 'Pintura I', 12000),
+      mat('Manual de Historia del Arte', 'Historia del Arte', 12000),
       mat('Apunte de Taller', 'Taller de Pintura', 11000),
       mat('Guía de Dibujo', 'Dibujo I', 10000),
-      mat('Fotocopias de Historia del Arte', 'Historia del Arte', 13000),
+      mat('Apunte de Estética', 'Estética', 13000),
       mat('Cuadernillo de Grabado', 'Grabado I', 9000),
     ],
   },

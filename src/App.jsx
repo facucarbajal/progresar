@@ -6,6 +6,7 @@ import SeleccionCarrera from './screens/SeleccionCarrera.jsx'
 import Juego from './screens/Juego.jsx'
 import Final from './screens/Final.jsx'
 import Transicion from './components/Transicion.jsx'
+import LogoProgresar from './components/LogoProgresar.jsx'
 
 export default function App() {
   const [estado, dispatch] = useReducer(reducer, estadoInicial)
@@ -40,19 +41,26 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-full fondo-grilla scanlines">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={estado.pantalla + '-' + estado.diaIndex}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="min-h-screen"
-        >
-          {pantalla}
-        </motion.div>
-      </AnimatePresence>
+    <div className="min-h-screen flex flex-col fondo-grilla scanlines">
+      {/* Título de Progresar siempre arriba de todo */}
+      <header className="sticky top-0 z-40 flex justify-center py-3 border-b border-blanco/10 bg-noche/80 backdrop-blur">
+        <LogoProgresar size="sm" />
+      </header>
+
+      <main className="flex-1 flex flex-col">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={estado.pantalla + '-' + estado.diaIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="flex-1 flex flex-col"
+          >
+            {pantalla}
+          </motion.div>
+        </AnimatePresence>
+      </main>
     </div>
   )
 }

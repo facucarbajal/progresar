@@ -77,6 +77,53 @@ export default function Juego({ estado, dispatch }) {
     .filter(Boolean)
 
   const esUltimoMomento = momentoIndex === diaDef.orden.length - 1
+  const esParo = estado.paroDia === estado.diaIndex
+
+  // Día de paro: no hay clase ni tienda. No se gasta un peso.
+  if (esParo) {
+    return (
+      <div className="min-h-full flex justify-center p-3 sm:p-4">
+        <div className="w-full max-w-2xl flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <span className="font-titulo text-xl sm:text-2xl text-celeste sombra-texto">
+              {diaDef.nombre}
+            </span>
+            <span className="text-[11px] text-blanco/60">
+              {carrera.emoji} {carrera.nombre}
+            </span>
+          </div>
+
+          <Billetera beca={estado.beca} mp={estado.mp} />
+          <BarraEnergia energia={estado.energia} />
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="borde-pixel border-naranja bg-naranja/15 shadow-pixel-lg p-6 text-center flex flex-col gap-4"
+          >
+            <div className="text-5xl">✊</div>
+            <h2 className="font-titulo text-3xl sm:text-4xl text-naranja sombra-texto">
+              PARO
+            </h2>
+            <p className="text-lg sm:text-xl text-blanco leading-relaxed">
+              Tus profesores no cobran hace 3 meses y hoy no dan clase.
+            </p>
+            <p className="text-sm text-blanco/60">
+              Hoy no gastás un peso. Aprovechá para descansar.
+            </p>
+          </motion.div>
+
+          <BotonPixel
+            variante="primario"
+            onClick={() => dispatch({ tipo: 'TERMINAR_DIA' })}
+            className="w-full"
+          >
+            Seguir ▶
+          </BotonPixel>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-full flex justify-center p-3 sm:p-4">
@@ -152,10 +199,8 @@ export default function Juego({ estado, dispatch }) {
                     emoji={c.emoji}
                     nombre={c.nombre}
                     costo={c.costo}
-                    energia={c.energia}
                     alcanza={plata >= c.costo}
                     onComprar={() => dispatch({ tipo: 'COMER', comida: c })}
-                    textoBoton="Comprar"
                   />
                 ))}
               </Tienda>

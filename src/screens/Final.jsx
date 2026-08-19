@@ -76,21 +76,11 @@ export default function Final({ estado, dispatch }) {
                 y pibas entre 18 y 24 años.
               </p>
 
-              <div className="flex flex-col gap-2">
-                <p className="text-[15px] leading-relaxed text-blanco">
-                  En 2014, una beca Progresar alcanzaba para{' '}
-                  <span className="font-pixel text-oro">34 kilos de yerba</span>:
-                </p>
-                <div className="text-xl sm:text-2xl leading-relaxed tracking-wide">
-                  🧉🧉🧉🧉🧉🧉🧉🧉🧉🧉🧉
-                </div>
-                <p className="text-[15px] leading-relaxed text-blanco">
-                  Hoy solo alcanza para <span className="font-pixel text-oro">6 kilos</span>:
-                </p>
-                <div className="text-xl sm:text-2xl leading-relaxed tracking-wide">
-                  🧉🧉 <span className="align-middle">📉</span>
-                </div>
-              </div>
+              <p className="text-[15px] leading-relaxed text-blanco">
+                En 2014, una beca Progresar alcanzaba para{' '}
+                <span className="font-pixel text-oro">34 kilos de yerba</span>. Hoy solo
+                alcanza para <span className="font-pixel text-oro">6 kilos</span>.
+              </p>
 
               <p className="text-[15px] leading-relaxed text-blanco">
                 Hay una ley que obliga a Milei a duplicar la plata que ofrece el Progresar.

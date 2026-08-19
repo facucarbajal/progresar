@@ -222,7 +222,7 @@ export function reducer(estado, accion) {
           finalizado: diaDef.nombre,
           siguiente: DIAS[siguiente].nombre,
           cierre: esParoHoy
-            ? 'Hoy no hubo clases por el paro. Por lo menos no gastaste un peso.'
+            ? 'Hoy no hubo clases por el paro.'
             : mensajeCierre({ estudio, comio, materia }),
           comio: esParoHoy ? true : comio,
           boleto,

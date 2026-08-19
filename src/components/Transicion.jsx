@@ -34,7 +34,7 @@ export default function Transicion({ transicion, diasSinComer, onContinuar }) {
           </div>
         ) : (
           <div className="borde-pixel border-naranja/60 bg-noche/60 px-4 py-2 text-base sm:text-lg text-naranja">
-            ✊ Mañana hay paro: no viajás, no gastás SUBE.
+            🚫 Mañana hay paro: no viajás, no gastás SUBE.
           </div>
         )}
 

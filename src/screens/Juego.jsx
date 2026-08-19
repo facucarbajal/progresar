@@ -101,15 +101,12 @@ export default function Juego({ estado, dispatch }) {
             animate={{ opacity: 1, scale: 1 }}
             className="borde-pixel border-naranja bg-naranja/15 shadow-pixel-lg p-6 text-center flex flex-col gap-4"
           >
-            <div className="text-5xl">✊</div>
+            <div className="text-5xl">🚫</div>
             <h2 className="font-titulo text-3xl sm:text-4xl text-naranja sombra-texto">
               PARO
             </h2>
             <p className="text-lg sm:text-xl text-blanco leading-relaxed">
               Tus profesores no cobran hace 3 meses y hoy no dan clase.
-            </p>
-            <p className="text-sm text-blanco/60">
-              Hoy no gastás un peso. Aprovechá para descansar.
             </p>
           </motion.div>
 

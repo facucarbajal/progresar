@@ -93,7 +93,9 @@ export default function Juego({ estado, dispatch }) {
   // La oferta de plata (changa/crédito) aparece Mar/Mié/Jue, y sólo si ya
   // gastaste más de la mitad de la plata que tenías al arrancar.
   const mostrarOferta =
-    [1, 2, 3].includes(estado.diaIndex) && plata < (BECA + MP_INICIAL) / 2
+    estado.hayOferta &&
+    [1, 2, 3].includes(estado.diaIndex) &&
+    plata < (BECA + MP_INICIAL) / 2
 
   // Día de paro: no hay clase ni tienda. No se gasta un peso.
   if (esParo) {
@@ -245,17 +247,19 @@ export default function Juego({ estado, dispatch }) {
             >
               {estado.dia.changaHecha ? 'Changa hecha ✓' : 'Changa (+$, −energía)'}
             </BotonPixel>
-            {CREDITOS.map((cr) => (
-              <BotonPixel
-                key={cr.recibe}
-                variante="fantasma"
-                disabled={!!estado.deuda}
-                onClick={() => dispatch({ tipo: 'CREDITO', recibe: cr.recibe, paga: cr.paga })}
-                className="!py-2"
-              >
-                Crédito +{pesos(cr.recibe)} <span className="text-naranja">(debés {pesos(cr.paga)})</span>
-              </BotonPixel>
-            ))}
+            {!estado.creditoUsado &&
+              CREDITOS.map((cr) => (
+                <BotonPixel
+                  key={cr.recibe}
+                  variante="fantasma"
+                  disabled={!!estado.deuda}
+                  onClick={() => dispatch({ tipo: 'CREDITO', recibe: cr.recibe, paga: cr.paga })}
+                  className="!py-2"
+                >
+                  Crédito +{pesos(cr.recibe)}{' '}
+                  <span className="text-naranja">(debés {pesos(cr.paga)})</span>
+                </BotonPixel>
+              ))}
           </div>
           {estado.deuda && (
             <p className="text-[11px] text-naranja leading-relaxed">

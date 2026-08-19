@@ -50,6 +50,8 @@ export const estadoInicial = {
   ultimoMovimiento: { monto: 0, id: 0 }, // para animar la plata volando
   motivoFinal: null,
   paroDia: null,
+  hayOferta: false, // esta partida tiene changa/crédito (30% de las veces)
+  creditoUsado: false, // el crédito se puede pedir una sola vez por partida
   dia: diaLimpio(),
   transicion: null,
 }
@@ -90,7 +92,13 @@ function ganarMov(estado, monto) {
 }
 
 function nuevaPartida(carreraId) {
-  return { ...estadoInicial, pantalla: 'juego', carreraId, paroDia: sortearParo() }
+  return {
+    ...estadoInicial,
+    pantalla: 'juego',
+    carreraId,
+    paroDia: sortearParo(),
+    hayOferta: Math.random() < 0.3,
+  }
 }
 
 // Override de motivo: si changuearon mucho y estudiaron poco, dejaron la facu.
@@ -202,10 +210,11 @@ export function reducer(estado, accion) {
     // Crédito de Mercado Pago: plata ya, deuda en 2 días. Uno por vez.
     case 'CREDITO': {
       if (esParo(estado)) return estado
-      if (estado.deuda) return estado
+      if (estado.deuda || estado.creditoUsado) return estado
       return {
         ...estado,
         ...ganarMov(estado, accion.recibe),
+        creditoUsado: true,
         deuda: { montoPagar: accion.paga, diaVence: estado.diaIndex + 2 },
       }
     }

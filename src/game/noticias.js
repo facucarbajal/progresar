@@ -1,6 +1,7 @@
-// Titulares bizarros del gobierno que se cuelan en la leyenda de cierre del día.
-// Redactados para leerse bien en el medio de un párrafo.
-export const NOTICIAS = [
+// Dos pools separados. En la leyenda de cada día se cuela SIEMPRE una del
+// gobierno y SIEMPRE una de la facu.
+
+export const NOTICIAS_GOBIERNO = [
   'El gobierno cerró la facultad de Medicina pero abrió un casino online.',
   'El ministro de Economía inauguró una heladería en Palermo.',
   'Milei viajó a Estados Unidos a una fiesta de disfraces.',
@@ -17,6 +18,9 @@ export const NOTICIAS = [
   'El ministro dijo que la pobreza "es una construcción zurda".',
   'Milei inauguró una estatua de la motosierra.',
   'El gobierno propuso arancelar la biblioteca.',
+]
+
+export const NOTICIAS_FACU = [
   'La fotocopiadora aumentó tres veces esta semana.',
   'El profesor titular renunció: se fue a manejar un Uber.',
   'El aula no tiene ni tiza, pero te piden el trabajo en PDF a color.',
@@ -28,6 +32,14 @@ export const NOTICIAS = [
   'Cerraron un baño de la facu "por ajuste".',
 ]
 
-export function noticiaAlAzar() {
-  return NOTICIAS[Math.floor(Math.random() * NOTICIAS.length)]
+function alAzar(lista) {
+  return lista[Math.floor(Math.random() * lista.length)]
+}
+
+export function noticiaGobierno() {
+  return alAzar(NOTICIAS_GOBIERNO)
+}
+
+export function noticiaFacu() {
+  return alAzar(NOTICIAS_FACU)
 }

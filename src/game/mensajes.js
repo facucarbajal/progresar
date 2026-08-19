@@ -1,19 +1,21 @@
 import { pesos } from './config.js'
 
 // Mensaje de cierre del día, según si estudiaste (compraste el cuadernillo) y si
-// comiste ese día. Se le cuela un titular bizarro del gobierno en el medio.
-export function mensajeCierre({ estudio, comio, materia, noticia }) {
-  const n = noticia ? ` ${noticia}` : ''
+// comiste ese día. Al final se cuelan SIEMPRE una noticia del gobierno y una de
+// la facu (pools separados).
+export function mensajeCierre({ estudio, comio, materia, noticiaGob, noticiaFacu }) {
+  let base
   if (estudio && comio) {
-    return `Cursaste, entendiste algo y hasta comiste. Un lujo que con esta beca no vas a poder repetir muchas veces.${n}`
+    base = 'Cursaste, entendiste algo y hasta comiste. Un lujo que con esta beca no vas a poder repetir muchas veces.'
+  } else if (estudio && !comio) {
+    base = 'Te sabés de memoria los capítulos 1, 2 y 3, pero no podés ni caminar del hambre. Mañana será un nuevo día…'
+  } else if (!estudio && comio) {
+    base = 'Pegaste buena onda con el del comedor y te recomendó un par de cátedras. No leíste el cuadernillo y te la pasás mirando la serie de Moria.'
+  } else {
+    base = `Te dormís en ${materia}. Un compañero te da un mate y revivís. No tenés ni una lapicera y el profesor ya te tomó de punto.`
   }
-  if (estudio && !comio) {
-    return `Te sabés de memoria los capítulos 1, 2 y 3, pero no podés ni caminar del hambre. Mañana será un nuevo día… ${noticia ?? ''}`.trim()
-  }
-  if (!estudio && comio) {
-    return `Pegaste buena onda con el del comedor y te recomendó un par de cátedras. No leíste el cuadernillo y te la pasás mirando la serie de Moria.${n}`
-  }
-  return `Te dormís en ${materia}. Un compañero te da un mate y revivís. No tenés ni una lapicera y el profesor ya te tomó de punto.${n}`
+  const extras = [noticiaGob, noticiaFacu].filter(Boolean).join(' ')
+  return `${base} ${extras}`.trim()
 }
 
 // Remates por carrera para el final "sin plata" (el del boleto). Rotan al azar.

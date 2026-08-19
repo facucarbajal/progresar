@@ -16,7 +16,7 @@ import { DIAS } from './dias.js'
 import { CARRERAS } from './carreras.js'
 import { mensajeCierre } from './mensajes.js'
 import { eventoAlAzar } from './eventos.js'
-import { noticiaAlAzar } from './noticias.js'
+import { noticiaGobierno, noticiaFacu } from './noticias.js'
 
 // Progreso de un día recién arrancado.
 function diaLimpio() {
@@ -286,8 +286,14 @@ export function reducer(estado, accion) {
           siguiente: DIAS[siguiente].nombre,
           numeroSiguiente: siguiente + 1,
           cierre: esParoHoy
-            ? `Hoy no hubo clases por el paro. ${noticiaAlAzar()}`
-            : mensajeCierre({ estudio, comio, materia, noticia: noticiaAlAzar() }),
+            ? `Hoy no hubo clases por el paro. ${noticiaGobierno()} ${noticiaFacu()}`
+            : mensajeCierre({
+                estudio,
+                comio,
+                materia,
+                noticiaGob: noticiaGobierno(),
+                noticiaFacu: noticiaFacu(),
+              }),
           boleto,
           compras,
           totalGastado,

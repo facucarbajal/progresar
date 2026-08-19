@@ -5,11 +5,12 @@ import DialogBox from '../components/DialogBox.jsx'
 import Tienda, { ProductoCard } from '../components/Tienda.jsx'
 import BotonPixel from '../components/BotonPixel.jsx'
 import Alerta from '../components/Alerta.jsx'
+import EventoCard from '../components/EventoCard.jsx'
 import { getCarrera } from '../game/carreras.js'
 import { DIAS } from '../game/dias.js'
 import { getUtil, COMIDA } from '../game/items.js'
 import { disponible } from '../game/state.js'
-import { pesos } from '../game/config.js'
+import { pesos, CHANGA_MONTOS, CREDITOS } from '../game/config.js'
 
 function sprite(energia) {
   if (energia <= 25) return '😩'
@@ -40,7 +41,12 @@ function CuadernilloCard({ material, comprado, plata, dispatch }) {
             variante="oro"
             disabled={plata < material.original}
             onClick={() =>
-              dispatch({ tipo: 'COMPRAR_CUADERNILLO', version: 'original', costo: material.original })
+              dispatch({
+                tipo: 'COMPRAR_CUADERNILLO',
+                version: 'original',
+                costo: material.original,
+                nombre: material.nombre,
+              })
             }
             className="w-full !py-2"
           >
@@ -50,7 +56,12 @@ function CuadernilloCard({ material, comprado, plata, dispatch }) {
             variante="fantasma"
             disabled={plata < material.impreso}
             onClick={() =>
-              dispatch({ tipo: 'COMPRAR_CUADERNILLO', version: 'impreso', costo: material.impreso })
+              dispatch({
+                tipo: 'COMPRAR_CUADERNILLO',
+                version: 'impreso',
+                costo: material.impreso,
+                nombre: material.nombre,
+              })
             }
             className="w-full !py-2"
           >
@@ -83,6 +94,7 @@ export default function Juego({ estado, dispatch }) {
   if (esParo) {
     return (
       <div className="min-h-full flex justify-center p-3 sm:p-4">
+        <EventoCard evento={estado.evento} onCerrar={() => dispatch({ tipo: 'LIMPIAR_EVENTO' })} />
         <div className="w-full max-w-2xl flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <span className="font-titulo text-xl sm:text-2xl text-celeste sombra-texto">
@@ -93,7 +105,7 @@ export default function Juego({ estado, dispatch }) {
             </span>
           </div>
 
-          <Billetera beca={estado.beca} mp={estado.mp} />
+          <Billetera beca={estado.beca} mp={estado.mp} movimiento={estado.ultimoMovimiento} />
           <BarraEnergia energia={estado.energia} />
 
           <motion.div
@@ -132,6 +144,9 @@ export default function Juego({ estado, dispatch }) {
         }
         onCerrar={() => dispatch({ tipo: 'LIMPIAR_ALERTA' })}
       />
+      {!ultimoTrucho && (
+        <EventoCard evento={estado.evento} onCerrar={() => dispatch({ tipo: 'LIMPIAR_EVENTO' })} />
+      )}
 
       <div className="w-full max-w-2xl flex flex-col gap-3">
         {/* Header: día + sprite + billetera + energía */}
@@ -147,7 +162,7 @@ export default function Juego({ estado, dispatch }) {
           </div>
         </div>
 
-        <Billetera beca={estado.beca} mp={estado.mp} />
+        <Billetera beca={estado.beca} mp={estado.mp} movimiento={estado.ultimoMovimiento} />
         <BarraEnergia energia={estado.energia} />
 
         {momentoIndex === 0 && (
@@ -204,6 +219,45 @@ export default function Juego({ estado, dispatch }) {
             )}
           </motion.div>
         </AnimatePresence>
+
+        {/* Changas y crédito */}
+        <div className="borde-pixel border-blanco/40 bg-noche/50 p-3 flex flex-col gap-2">
+          <div className="font-pixel text-[11px] text-celeste/80 uppercase tracking-wide">
+            🤝 ¿Necesitás plata?
+          </div>
+          <div className="grid sm:grid-cols-3 gap-2">
+            <BotonPixel
+              variante="comprar"
+              disabled={estado.dia.changaHecha}
+              onClick={() =>
+                dispatch({
+                  tipo: 'CHANGA',
+                  monto: CHANGA_MONTOS[Math.floor(Math.random() * CHANGA_MONTOS.length)],
+                })
+              }
+              className="!py-2"
+            >
+              {estado.dia.changaHecha ? 'Changa hecha ✓' : 'Changa (+$, −energía)'}
+            </BotonPixel>
+            {CREDITOS.map((cr) => (
+              <BotonPixel
+                key={cr.recibe}
+                variante="fantasma"
+                disabled={!!estado.deuda}
+                onClick={() => dispatch({ tipo: 'CREDITO', recibe: cr.recibe, paga: cr.paga })}
+                className="!py-2"
+              >
+                Crédito +{pesos(cr.recibe)} <span className="text-naranja">(debés {pesos(cr.paga)})</span>
+              </BotonPixel>
+            ))}
+          </div>
+          {estado.deuda && (
+            <p className="text-[11px] text-naranja leading-relaxed">
+              ⚠ Debés {pesos(estado.deuda.montoPagar)} del crédito. Te lo descuentan el{' '}
+              {DIAS[estado.deuda.diaVence]?.nombre ?? 'finde'}.
+            </p>
+          )}
+        </div>
 
         {/* Navegación entre momentos / fin de día */}
         <div className="flex items-center gap-2 pt-1">

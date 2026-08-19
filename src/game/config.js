@@ -25,6 +25,19 @@ export const BOLETOS = [1200, 1200, 1500, 1700, 2000]
 // $28.000 es la beca real; ~$153.000 sería el valor actualizado vs 2015.
 export const BECA_ACTUALIZADA = 153000
 
+// Probabilidad de que aparezca un evento aleatorio al arrancar un día normal.
+export const EVENTO_PROB = 0.18
+
+// Changa: ganás una de estas al azar, a cambio de energía.
+export const CHANGA_MONTOS = [1000, 2000]
+export const CHANGA_ENERGIA = 15 // lo que te cansa la changa
+
+// Crédito Mercado Pago: recibís X hoy, debés Y en 2 días.
+export const CREDITOS = [
+  { recibe: 2000, paga: 3000 },
+  { recibe: 3000, paga: 4000 },
+]
+
 // Formatea números como pesos argentinos: 28000 -> "$28.000"
 export function pesos(n) {
   return '$' + Math.round(n).toLocaleString('es-AR')

@@ -23,6 +23,7 @@ export default {
         naranja: '#ef7d57',    // alerta
         rojo: '#b13e53',       // peligro / game over
         magenta: '#a54bd6',
+        violeta: '#7c3aed',    // La Libertad Avanza / cadena oficialista
       },
       boxShadow: {
         // Sombra dura escalonada estilo caja RPG
@@ -34,9 +35,14 @@ export default {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' },
         },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         blink: 'blink 1s step-end infinite',
+        marquee: 'marquee 18s linear infinite',
       },
     },
   },

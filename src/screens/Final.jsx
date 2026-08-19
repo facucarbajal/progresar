@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import BotonPixel from '../components/BotonPixel.jsx'
 import LogoProgresar from '../components/LogoProgresar.jsx'
@@ -6,6 +6,9 @@ import { pesos, BECA, BECA_ACTUALIZADA } from '../game/config.js'
 import { DIAS } from '../game/dias.js'
 import { disponible } from '../game/state.js'
 import { textoFinal } from '../game/mensajes.js'
+import { vibrar } from '../game/haptics.js'
+
+const ENTERATE_URL = 'https://www.argentina.gob.ar/educacion/progresar'
 
 // Pantalla de game over, dividida en dos pasos:
 //   1) el desenlace de TU partida (game over + stats)
@@ -21,7 +24,13 @@ export default function Final({ estado, dispatch }) {
     comprasTotal: estado.comprasTotal,
     diasCursados: estado.diaIndex + 1,
     plata: disponible(estado),
+    deudaMonto: estado.deudaMonto,
   })
+
+  // Vibración al llegar al game over.
+  useEffect(() => {
+    vibrar([90, 50, 90])
+  }, [])
 
   const textoCompartir = `Jugué a Progre$ar y me fundí el ${diaNombre}. La Beca Progresar es de ${pesos(
     BECA,
@@ -94,12 +103,28 @@ export default function Final({ estado, dispatch }) {
               </p>
             </div>
 
+            {/* Comparador */}
+            <div className="w-full borde-pixel border-celeste/60 bg-noche/60 p-4 text-left">
+              <div className="font-pixel text-[11px] text-celeste/80 uppercase tracking-wide mb-2">
+                Con {pesos(BECA)} hoy comprás:
+              </div>
+              <ul className="flex flex-col gap-1 text-[15px] text-blanco/90">
+                <li>🧉 6 kilos de yerba</li>
+                <li>🚌 unos 20 viajes de colectivo</li>
+                <li>📚 2 apuntes de la facu</li>
+                <li>🍔 ni un combo de McDonald’s</li>
+              </ul>
+            </div>
+
             <div className="flex flex-wrap items-center justify-center gap-3">
               <a href={twitter} target="_blank" rel="noopener noreferrer">
                 <BotonPixel variante="primario">Compartir en X</BotonPixel>
               </a>
               <a href={whatsapp} target="_blank" rel="noopener noreferrer">
-                <BotonPixel variante="oro">WhatsApp</BotonPixel>
+                <BotonPixel variante="comprar">WhatsApp</BotonPixel>
+              </a>
+              <a href={ENTERATE_URL} target="_blank" rel="noopener noreferrer">
+                <BotonPixel variante="oro">Enterate más</BotonPixel>
               </a>
             </div>
 

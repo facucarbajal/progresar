@@ -15,19 +15,51 @@ export function mensajeCierre({ estudio, comio, materia }) {
   return `Te dormís en ${materia}. Un compañero te da un mate y revivís. No tenés ni una lapicera en la mano y el profesor ya te tomó de punto.`
 }
 
-// Remate por carrera para el final "sin plata" (el del boleto).
-const REMATE_CARRERA = {
-  derecho: '¿Litigar? Será en otra vida…',
-  economia: 'Tanto estudiar el mercado para terminar atendiéndolo.',
-  artes: 'Tu obra maestra va a tener que esperar. Por ahora, dulces.',
-  biologia: 'La única célula que vas a mirar es la del molinete.',
-  'cs-politica': 'Ibas a cambiar el sistema. El sistema te cambió a vos.',
-  ingenieria: 'Ibas a construir puentes. Terminaste cruzando el mostrador.',
+// Remates por carrera para el final "sin plata" (el del boleto). Rotan al azar.
+const REMATES = {
+  derecho: [
+    '¿Litigar? Será en otra vida…',
+    'Del Código Civil al código de barras del kiosco.',
+  ],
+  economia: [
+    'Tanto estudiar el mercado para terminar atendiéndolo.',
+    'Proyectaste todo, menos que no ibas a llegar a fin de mes.',
+  ],
+  artes: [
+    'Tu obra maestra va a tener que esperar. Por ahora, dulces.',
+    'La única muestra que vas a colgar es la del delantal del laburo.',
+  ],
+  biologia: [
+    'La única célula que vas a mirar es la del molinete.',
+    'Evolucionaste… a pluriempleado.',
+  ],
+  'cs-politica': [
+    'Ibas a cambiar el sistema. El sistema te cambió a vos.',
+    'Militaste toda la campaña y te ajustaron igual.',
+  ],
+  ingenieria: [
+    'Ibas a construir puentes. Terminaste cruzando el mostrador.',
+    'Calculaste todo menos la inflación.',
+  ],
+}
+
+function remateAlAzar(carreraId) {
+  const lista = REMATES[carreraId]
+  if (!lista) return ''
+  return lista[Math.floor(Math.random() * lista.length)]
 }
 
 // Texto del game over según el motivo.
-// motivo: 'hambre' | 'sin_plata' | 'academico' | 'fin_semana'
-export function textoFinal({ motivo, diaNombre, carreraId, comprasTotal, diasCursados, plata }) {
+// motivo: 'hambre' | 'sin_plata' | 'academico' | 'fin_semana' | 'credito' | 'changa'
+export function textoFinal({
+  motivo,
+  diaNombre,
+  carreraId,
+  comprasTotal,
+  diasCursados,
+  plata,
+  deudaMonto,
+}) {
   const stats = `Compraste ${comprasTotal} ${comprasTotal === 1 ? 'cosa' : 'cosas'} en ${diasCursados} ${diasCursados === 1 ? 'día' : 'días'} de cursada.`
 
   switch (motivo) {
@@ -45,6 +77,22 @@ export function textoFinal({ motivo, diaNombre, carreraId, comprasTotal, diasCur
         cuerpo: `Querés imprimir las fotocopias de tus ${diasCursados} materias y no te queda un peso. Leés todo del celular y te estalla la cabeza. Te atrasás con la cursada, llega el primer parcial y no podés responder una sola consigna. ¿Y si mejor probás suerte con la ruleta?`,
         stats,
       }
+    case 'credito':
+      return {
+        emoji: '📵',
+        titulo: 'Te ahogó el crédito',
+        cuerpo: `El crédito de Mercado Pago te comió. Debés ${pesos(
+          deudaMonto ?? 0,
+        )} y ni eso tenés. Te escribe un estudio de abogados.`,
+        stats,
+      }
+    case 'changa':
+      return {
+        emoji: '🧉',
+        titulo: 'Colgaste los libros',
+        cuerpo: 'Hiciste tantas changas que dejaste la facu. En el kiosco te ascendieron a encargado. Progresar era esto, ¿no?',
+        stats,
+      }
     case 'fin_semana':
       return {
         emoji: '🥴',
@@ -59,9 +107,9 @@ export function textoFinal({ motivo, diaNombre, carreraId, comprasTotal, diasCur
         titulo: 'Se te acabó la beca',
         cuerpo: `Es ${diaNombre}, aumentó el boleto y ya no te queda plata para la SUBE. Preferís jugarte los ${pesos(
           plata,
-        )} que te quedaron a que gana Boca. Pensás en pedir un crédito en Mercado Pago, pero todavía estás pagando el anterior. Encontrás un laburo de 8hs en un kiosco por $350.000. ${
-          REMATE_CARRERA[carreraId] ?? ''
-        }`,
+        )} que te quedaron a que gana Boca. Pensás en pedir un crédito en Mercado Pago, pero todavía estás pagando el anterior. Encontrás un laburo de 8hs en un kiosco por $350.000. ${remateAlAzar(
+          carreraId,
+        )}`,
         stats,
       }
   }

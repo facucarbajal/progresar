@@ -8,35 +8,48 @@ import {
   DIAS_SIN_COMER_LIMITE,
   PROB_TRUCHO_FALLA,
   BOLETOS,
+  EVENTO_PROB,
+  CHANGA_ENERGIA,
+  pesos,
 } from './config.js'
 import { DIAS } from './dias.js'
 import { CARRERAS } from './carreras.js'
 import { mensajeCierre } from './mensajes.js'
+import { eventoAlAzar } from './eventos.js'
+import { noticiaAlAzar } from './noticias.js'
 
 // Progreso de un día recién arrancado.
 function diaLimpio() {
   return {
-    momentoIndex: 0, // 0 o 1, según el 'orden' del día
-    slots: {}, // { cuadernillo:true, lapicera:true, ... } requisitos cumplidos
-    comprados: {}, // ids ya comprados (para no re-comprar)
+    momentoIndex: 0,
+    slots: {},
+    comprados: {},
     comioHoy: false,
-    ultimoTrucho: null, // null | 'ok' | 'fallo' — feedback del impreso trucho
-    truchoIntentos: 0, // el 1er intento de trucho del día siempre falla
+    changaHecha: false,
+    ultimoTrucho: null,
+    truchoIntentos: 0,
+    compras: [], // [{ nombre, costo }] para el resumen del día
   }
 }
 
 export const estadoInicial = {
-  pantalla: 'landing', // 'landing' | 'carrera' | 'juego' | 'transicion' | 'final'
+  pantalla: 'landing',
   carreraId: null,
   beca: BECA,
   mp: MP_INICIAL,
   energia: ENERGIA_INICIAL,
   diaIndex: 0,
   diasSinComer: 0,
-  estudioAlguna: false, // ¿compró algún cuadernillo en toda la partida?
-  comprasTotal: 0, // cantidad de cosas efectivamente compradas
-  motivoFinal: null, // 'hambre' | 'sin_plata' | 'academico' | 'fin_semana'
-  paroDia: null, // índice del día de paro (1=Martes o 2=Miércoles), o null
+  estudioAlguna: false,
+  diasEstudiados: 0,
+  changasTotal: 0,
+  comprasTotal: 0,
+  deuda: null, // { montoPagar, diaVence } del crédito de Mercado Pago
+  deudaMonto: 0, // para el mensaje del final 'credito'
+  evento: null, // evento aleatorio a mostrar (ya aplicado)
+  ultimoMovimiento: { monto: 0, id: 0 }, // para animar la plata volando
+  motivoFinal: null,
+  paroDia: null,
   dia: diaLimpio(),
   transicion: null,
 }
@@ -47,12 +60,10 @@ function sortearParo() {
   return Math.random() < 0.5 ? 1 : 2
 }
 
-// Plata total disponible (beca + lo poco de MP).
 export function disponible(estado) {
   return estado.beca + estado.mp
 }
 
-// ¿El día actual es de paro? Ese día no se gasta un peso.
 function esParo(estado) {
   return estado.paroDia === estado.diaIndex
 }
@@ -64,10 +75,28 @@ function gastar(estado, monto) {
   return { beca: estado.beca - deBeca, mp: estado.mp - restante }
 }
 
+function nextMovId(estado) {
+  return estado.ultimoMovimiento.id + 1
+}
+
+// Gasta y registra el movimiento (para la animación de plata volando).
+function gastarMov(estado, monto) {
+  return { ...gastar(estado, monto), ultimoMovimiento: { monto: -monto, id: nextMovId(estado) } }
+}
+
+// Ingreso de plata (va a Mercado Pago) + movimiento.
+function ganarMov(estado, monto) {
+  return { mp: estado.mp + monto, ultimoMovimiento: { monto, id: nextMovId(estado) } }
+}
+
 function nuevaPartida(carreraId) {
-  // El lunes NO se cobra SUBE: con los $28.000 tenés que poder comprar el
-  // material y la comida del primer día. El boleto pega a partir del martes.
   return { ...estadoInicial, pantalla: 'juego', carreraId, paroDia: sortearParo() }
+}
+
+// Override de motivo: si changuearon mucho y estudiaron poco, dejaron la facu.
+function resolverMotivo(estado, base) {
+  if (estado.changasTotal >= 2 && estado.diasEstudiados <= 1) return 'changa'
+  return base
 }
 
 export function reducer(estado, accion) {
@@ -78,34 +107,32 @@ export function reducer(estado, accion) {
     case 'ELEGIR_CARRERA':
       return nuevaPartida(accion.carreraId)
 
-    // Compra un útil de cursada. slotId opcional (si es requerido).
     case 'COMPRAR_UTIL': {
       const { util, slotId } = accion
       if (esParo(estado)) return estado
       if (estado.dia.comprados[util.id]) return estado
       if (disponible(estado) < util.costo) return estado
-      const wallets = gastar(estado, util.costo)
       return {
         ...estado,
-        ...wallets,
+        ...gastarMov(estado, util.costo),
         comprasTotal: estado.comprasTotal + 1,
         dia: {
           ...estado.dia,
           comprados: { ...estado.dia.comprados, [util.id]: true },
           slots: slotId ? { ...estado.dia.slots, [slotId]: true } : estado.dia.slots,
+          compras: [...estado.dia.compras, { nombre: util.nombre, costo: util.costo }],
         },
       }
     }
 
-    // Compra el cuadernillo del día. version: 'original' | 'impreso'.
     case 'COMPRAR_CUADERNILLO': {
       if (esParo(estado)) return estado
-      if (estado.dia.slots.cuadernillo) return estado // ya lo tenés
+      if (estado.dia.slots.cuadernillo) return estado
       if (disponible(estado) < accion.costo) return estado
-      const wallets = gastar(estado, accion.costo)
+      const wallets = gastarMov(estado, accion.costo)
+      const nombre = accion.nombre ?? 'Material'
 
       if (accion.version === 'impreso') {
-        // El 1er intento de trucho del día siempre falla; los reintentos, 45%.
         const forzado = estado.dia.truchoIntentos === 0
         const falla = forzado || Math.random() < PROB_TRUCHO_FALLA
         return {
@@ -113,46 +140,81 @@ export function reducer(estado, accion) {
           ...wallets,
           comprasTotal: estado.comprasTotal + (falla ? 0 : 1),
           estudioAlguna: estado.estudioAlguna || !falla,
+          diasEstudiados: estado.diasEstudiados + (falla ? 0 : 1),
           dia: {
             ...estado.dia,
             truchoIntentos: estado.dia.truchoIntentos + 1,
             slots: falla ? estado.dia.slots : { ...estado.dia.slots, cuadernillo: true },
             ultimoTrucho: falla ? 'fallo' : 'ok',
+            compras: [
+              ...estado.dia.compras,
+              { nombre: `${nombre} (impreso${falla ? ', no se leyó' : ''})`, costo: accion.costo },
+            ],
           },
         }
       }
 
-      // Original: siempre sirve.
       return {
         ...estado,
         ...wallets,
         comprasTotal: estado.comprasTotal + 1,
         estudioAlguna: true,
+        diasEstudiados: estado.diasEstudiados + 1,
         dia: {
           ...estado.dia,
           slots: { ...estado.dia.slots, cuadernillo: true },
           ultimoTrucho: null,
+          compras: [...estado.dia.compras, { nombre, costo: accion.costo }],
         },
       }
     }
 
-    // Comprar comida (objetivo personal). Se puede comer varias veces.
     case 'COMER': {
       const { comida } = accion
       if (esParo(estado)) return estado
       if (disponible(estado) < comida.costo) return estado
-      const wallets = gastar(estado, comida.costo)
       return {
         ...estado,
-        ...wallets,
+        ...gastarMov(estado, comida.costo),
         comprasTotal: estado.comprasTotal + 1,
         energia: Math.min(ENERGIA_MAX, estado.energia + comida.energia),
-        dia: { ...estado.dia, comioHoy: true },
+        dia: {
+          ...estado.dia,
+          comioHoy: true,
+          compras: [...estado.dia.compras, { nombre: comida.nombre, costo: comida.costo }],
+        },
+      }
+    }
+
+    // Changa: ganás plata a cambio de energía. Una por día.
+    case 'CHANGA': {
+      if (esParo(estado)) return estado
+      if (estado.dia.changaHecha) return estado
+      return {
+        ...estado,
+        ...ganarMov(estado, accion.monto),
+        changasTotal: estado.changasTotal + 1,
+        energia: Math.max(0, estado.energia - CHANGA_ENERGIA),
+        dia: { ...estado.dia, changaHecha: true },
+      }
+    }
+
+    // Crédito de Mercado Pago: plata ya, deuda en 2 días. Uno por vez.
+    case 'CREDITO': {
+      if (esParo(estado)) return estado
+      if (estado.deuda) return estado
+      return {
+        ...estado,
+        ...ganarMov(estado, accion.recibe),
+        deuda: { montoPagar: accion.paga, diaVence: estado.diaIndex + 2 },
       }
     }
 
     case 'LIMPIAR_ALERTA':
       return { ...estado, dia: { ...estado.dia, ultimoTrucho: null } }
+
+    case 'LIMPIAR_EVENTO':
+      return { ...estado, evento: null }
 
     case 'SIGUIENTE_MOMENTO':
       return { ...estado, dia: { ...estado.dia, momentoIndex: 1 } }
@@ -160,16 +222,17 @@ export function reducer(estado, accion) {
     case 'VOLVER_MOMENTO':
       return { ...estado, dia: { ...estado.dia, momentoIndex: 0 } }
 
-    // Cierre del día: única evaluación de derrota (hambre / sin plata).
     case 'TERMINAR_DIA': {
       const diaDef = DIAS[estado.diaIndex]
       const materia = CARRERAS.find((c) => c.id === estado.carreraId)
         .materiales[estado.diaIndex].materia
       const estudio = !!estado.dia.slots.cuadernillo
       const comio = estado.dia.comioHoy
-      const esParoHoy = estado.paroDia === estado.diaIndex
+      const esParoHoy = esParo(estado)
+      const compras = estado.dia.compras
+      const totalGastado = compras.reduce((a, c) => a + c.costo, 0)
 
-      // 1) Hambre: sólo cuenta en días normales. En el paro descansás en casa.
+      // 1) Hambre (sólo en días normales).
       let diasSinComer = estado.diasSinComer
       let energia = estado.energia
       if (!esParoHoy) {
@@ -185,18 +248,18 @@ export function reducer(estado, accion) {
 
       const siguiente = estado.diaIndex + 1
 
-      // 2) Sobreviviste la semana entera.
+      // 2) Sobreviviste la semana.
       if (siguiente >= DIAS.length) {
         return {
           ...estado,
           energia,
           diasSinComer,
           pantalla: 'final',
-          motivoFinal: estado.estudioAlguna ? 'fin_semana' : 'academico',
+          motivoFinal: resolverMotivo(estado, estado.estudioAlguna ? 'fin_semana' : 'academico'),
         }
       }
 
-      // 3) SUBE de mañana (gratis si mañana es paro: no viajás).
+      // 3) SUBE de mañana (gratis si mañana es paro).
       const boleto = siguiente === estado.paroDia ? 0 : BOLETOS[siguiente]
       if (disponible(estado) < boleto) {
         return {
@@ -204,12 +267,12 @@ export function reducer(estado, accion) {
           energia,
           diasSinComer,
           pantalla: 'final',
-          motivoFinal: estado.estudioAlguna ? 'sin_plata' : 'academico',
+          motivoFinal: resolverMotivo(estado, estado.estudioAlguna ? 'sin_plata' : 'academico'),
         }
       }
 
-      // 4) Pagás la SUBE y arranca el día siguiente (pantalla de transición).
-      const wallets = gastar(estado, boleto)
+      // 4) Pagás la SUBE y arranca el día siguiente.
+      const wallets = boleto > 0 ? gastarMov(estado, boleto) : {}
       return {
         ...estado,
         ...wallets,
@@ -221,17 +284,50 @@ export function reducer(estado, accion) {
         transicion: {
           finalizado: diaDef.nombre,
           siguiente: DIAS[siguiente].nombre,
+          numeroSiguiente: siguiente + 1,
           cierre: esParoHoy
             ? 'Hoy no hubo clases por el paro.'
             : mensajeCierre({ estudio, comio, materia }),
           comio: esParoHoy ? true : comio,
           boleto,
+          compras,
+          totalGastado,
+          noticia: noticiaAlAzar(),
         },
       }
     }
 
-    case 'CONTINUAR':
-      return { ...estado, pantalla: 'juego', transicion: null }
+    case 'CONTINUAR': {
+      let s = { ...estado, pantalla: 'juego', transicion: null, evento: null }
+
+      // 1) Cobro del crédito si venció.
+      if (s.deuda && s.diaIndex >= s.deuda.diaVence) {
+        const monto = s.deuda.montoPagar
+        if (disponible(s) < monto) {
+          return { ...s, deuda: null, deudaMonto: monto, pantalla: 'final', motivoFinal: 'credito' }
+        }
+        s = {
+          ...s,
+          ...gastarMov(s, monto),
+          deuda: null,
+          evento: { emoji: '📵', texto: `Mercado Pago te descontó ${pesos(monto)} del crédito.` },
+        }
+      }
+
+      // 2) Evento aleatorio (si no cayó el del crédito y no es paro).
+      if (!s.evento && !esParo(s) && Math.random() < EVENTO_PROB) {
+        const ev = eventoAlAzar()
+        if (ev.dinero) {
+          s = ev.dinero >= 0 ? { ...s, ...ganarMov(s, ev.dinero) } : { ...s, ...gastarMov(s, -ev.dinero) }
+        }
+        if (ev.energia) {
+          s = { ...s, energia: Math.max(0, Math.min(ENERGIA_MAX, s.energia + ev.energia)) }
+        }
+        s = { ...s, evento: ev }
+      }
+
+      return s
+    }
 
     case 'REINICIAR':
       return { ...estadoInicial, pantalla: 'carrera' }

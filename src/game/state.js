@@ -61,11 +61,11 @@ function sortearParo() {
   return Math.random() < 0.5 ? 1 : 2
 }
 
-// 30% de las partidas: la opción de changa/crédito aparece un día al azar
-// (evitando el día de paro).
+// 30% de las partidas: la opción de changa/crédito aparece un día al azar.
+// Sólo Lun/Mar/Mié (los días a los que realmente llegás) y evitando el paro.
 function sortearOfertaPlata(paroDia) {
   if (Math.random() >= 0.3) return null
-  const dias = [0, 1, 2, 3, 4].filter((d) => d !== paroDia)
+  const dias = [0, 1, 2].filter((d) => d !== paroDia)
   return dias[Math.floor(Math.random() * dias.length)]
 }
 

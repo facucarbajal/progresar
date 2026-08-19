@@ -13,6 +13,19 @@ export const NOTICIAS = [
   'Un asesor estrella sugirió comer menos y trabajar más.',
   'El gobierno cerró un instituto pero abrió una casa de apuestas deportivas.',
   'Milei felicitó a un influencer por bancar el ajuste.',
+  'El gobierno eliminó el boleto estudiantil y lo reemplazó por "fe en el mercado".',
+  'El ministro dijo que la pobreza "es una construcción zurda".',
+  'Milei inauguró una estatua de la motosierra.',
+  'El gobierno propuso arancelar la biblioteca.',
+  'La fotocopiadora aumentó tres veces esta semana.',
+  'El profesor titular renunció: se fue a manejar un Uber.',
+  'El aula no tiene ni tiza, pero te piden el trabajo en PDF a color.',
+  'Te anotaste en una materia que ya no existe.',
+  'El apunte de la cátedra cuesta más que tu comida de la semana.',
+  'El wifi de la facu anda peor que tu situación económica.',
+  'Un compañero vende empanadas en el pasillo para pagar el cuatrimestre.',
+  'El profe falta seguido: tiene otros dos laburos.',
+  'Cerraron un baño de la facu "por ajuste".',
 ]
 
 export function noticiaAlAzar() {

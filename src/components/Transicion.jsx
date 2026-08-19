@@ -1,11 +1,10 @@
 import { motion } from 'framer-motion'
 import BotonPixel from './BotonPixel.jsx'
-import Ticker from './Ticker.jsx'
 import { pesos } from '../game/config.js'
 
-// Interstitial entre días: cierre, resumen de compras, SUBE, contador grande y
-// el ticker de noticias oficialista.
-export default function Transicion({ transicion, diasSinComer, onContinuar }) {
+// Interstitial entre días: leyenda de cierre, resumen de compras, SUBE y el
+// contador grande del día siguiente.
+export default function Transicion({ transicion, onContinuar }) {
   const { compras = [], totalGastado = 0 } = transicion
 
   return (
@@ -49,20 +48,9 @@ export default function Transicion({ transicion, diasSinComer, onContinuar }) {
           )}
         </div>
 
-        {!transicion.comio && (
-          <p className="font-pixel text-sm text-naranja leading-relaxed">
-            ⚠ Hoy no comiste. Llevás {diasSinComer}{' '}
-            {diasSinComer === 1 ? 'día' : 'días'} sin comer.
-          </p>
-        )}
-
-        {transicion.boleto > 0 ? (
+        {transicion.boleto > 0 && (
           <div className="text-base text-celeste">
             🚌 Pagaste {pesos(transicion.boleto)} de SUBE para llegar mañana.
-          </div>
-        ) : (
-          <div className="text-base text-naranja">
-            🚫 Mañana hay paro: no viajás, no gastás SUBE.
           </div>
         )}
 
@@ -73,8 +61,6 @@ export default function Transicion({ transicion, diasSinComer, onContinuar }) {
             {transicion.siguiente}
           </div>
         </div>
-
-        <Ticker noticia={transicion.noticia} />
 
         <BotonPixel variante="primario" onClick={onContinuar}>
           ▶ Seguir

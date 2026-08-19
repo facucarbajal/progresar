@@ -220,7 +220,8 @@ export default function Juego({ estado, dispatch }) {
           </motion.div>
         </AnimatePresence>
 
-        {/* Changas y crédito */}
+        {/* Changas y crédito (solo aparece un día al azar en la partida) */}
+        {estado.diaOfertaPlata === estado.diaIndex && (
         <div className="borde-pixel border-blanco/40 bg-noche/50 p-3 flex flex-col gap-2">
           <div className="font-pixel text-[11px] text-celeste/80 uppercase tracking-wide">
             🤝 ¿Necesitás plata?
@@ -258,6 +259,7 @@ export default function Juego({ estado, dispatch }) {
             </p>
           )}
         </div>
+        )}
 
         {/* Navegación entre momentos / fin de día */}
         <div className="flex items-center gap-2 pt-1">

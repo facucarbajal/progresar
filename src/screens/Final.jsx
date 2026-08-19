@@ -10,6 +10,14 @@ import { vibrar } from '../game/haptics.js'
 
 const ENTERATE_URL = 'https://www.argentina.gob.ar/educacion/progresar'
 
+// Cuánto compraba la beca en 2015 vs 2026.
+const COMPARACION = [
+  { item: '🧉 Yerba', y2015: '36 kg', y2026: '6 kg' },
+  { item: '🚌 Colectivo', y2015: '300 viajes', y2026: '35 viajes' },
+  { item: '🍽️ Almuerzos', y2015: '22', y2026: '5' },
+  { item: '📄 Fotocopias', y2015: '1.531', y2026: '350' },
+]
+
 // Pantalla de game over, dividida en dos pasos:
 //   1) el desenlace de TU partida (game over + stats)
 //   2) la bajada política (por qué pasa esto en serio)
@@ -103,17 +111,35 @@ export default function Final({ estado, dispatch }) {
               </p>
             </div>
 
-            {/* Comparador */}
-            <div className="w-full borde-pixel border-celeste/60 bg-noche/60 p-4 text-left">
-              <div className="font-pixel text-[11px] text-celeste/80 uppercase tracking-wide mb-2">
-                Con {pesos(BECA)} hoy comprás:
+            {/* Comparador 2015 vs 2026 */}
+            <div className="w-full borde-pixel border-celeste/60 bg-noche/60 p-4">
+              <div className="font-pixel text-[11px] text-celeste/80 uppercase tracking-wide mb-3 text-center">
+                Lo que compraba la beca
               </div>
-              <ul className="flex flex-col gap-1 text-[15px] text-blanco/90">
-                <li>🧉 6 kilos de yerba</li>
-                <li>🚌 unos 20 viajes de colectivo</li>
-                <li>📚 2 apuntes de la facu</li>
-                <li>🍔 ni un combo de McDonald’s</li>
-              </ul>
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="font-pixel text-xs">
+                    <th className="text-oro py-1 border border-blanco/15">2015</th>
+                    <th className="text-blanco/60 py-1 border border-blanco/15" />
+                    <th className="text-naranja py-1 border border-blanco/15">2026</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {COMPARACION.map((f) => (
+                    <tr key={f.item} className="text-sm">
+                      <td className="font-pixel text-oro tabular-nums text-center py-1.5 border border-blanco/15">
+                        {f.y2015}
+                      </td>
+                      <td className="text-blanco/90 text-center py-1.5 border border-blanco/15">
+                        {f.item}
+                      </td>
+                      <td className="font-pixel text-naranja tabular-nums text-center py-1.5 border border-blanco/15">
+                        {f.y2026}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-3">

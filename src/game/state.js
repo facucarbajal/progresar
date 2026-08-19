@@ -50,6 +50,7 @@ export const estadoInicial = {
   ultimoMovimiento: { monto: 0, id: 0 }, // para animar la plata volando
   motivoFinal: null,
   paroDia: null,
+  diaOfertaPlata: null, // día en que aparece changa/crédito (o null)
   dia: diaLimpio(),
   transicion: null,
 }
@@ -58,6 +59,14 @@ export const estadoInicial = {
 function sortearParo() {
   if (Math.random() >= 0.4) return null
   return Math.random() < 0.5 ? 1 : 2
+}
+
+// 30% de las partidas: la opción de changa/crédito aparece un día al azar
+// (evitando el día de paro).
+function sortearOfertaPlata(paroDia) {
+  if (Math.random() >= 0.3) return null
+  const dias = [0, 1, 2, 3, 4].filter((d) => d !== paroDia)
+  return dias[Math.floor(Math.random() * dias.length)]
 }
 
 export function disponible(estado) {
@@ -90,7 +99,14 @@ function ganarMov(estado, monto) {
 }
 
 function nuevaPartida(carreraId) {
-  return { ...estadoInicial, pantalla: 'juego', carreraId, paroDia: sortearParo() }
+  const paroDia = sortearParo()
+  return {
+    ...estadoInicial,
+    pantalla: 'juego',
+    carreraId,
+    paroDia,
+    diaOfertaPlata: sortearOfertaPlata(paroDia),
+  }
 }
 
 // Override de motivo: si changuearon mucho y estudiaron poco, dejaron la facu.
@@ -286,13 +302,11 @@ export function reducer(estado, accion) {
           siguiente: DIAS[siguiente].nombre,
           numeroSiguiente: siguiente + 1,
           cierre: esParoHoy
-            ? 'Hoy no hubo clases por el paro.'
-            : mensajeCierre({ estudio, comio, materia }),
-          comio: esParoHoy ? true : comio,
+            ? `Hoy no hubo clases por el paro. ${noticiaAlAzar()}`
+            : mensajeCierre({ estudio, comio, materia, noticia: noticiaAlAzar() }),
           boleto,
           compras,
           totalGastado,
-          noticia: noticiaAlAzar(),
         },
       }
     }

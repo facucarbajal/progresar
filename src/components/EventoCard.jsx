@@ -1,11 +1,11 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 
 // Cartel de evento aleatorio (o aviso del cobro del crédito) que baja de arriba.
 export default function EventoCard({ evento, onCerrar }) {
   return (
     <AnimatePresence>
       {evento && (
-        <motion.div
+        <m.div
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
@@ -24,7 +24,7 @@ export default function EventoCard({ evento, onCerrar }) {
               ✕
             </button>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   )

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { ENERGIA_MAX } from '../game/config.js'
 
 // Barra de energía estilo videojuego: se llena/vacía con animación y cambia de
@@ -16,7 +16,7 @@ export default function BarraEnergia({ energia }) {
         ⚡
       </span>
       <div className="relative h-4 w-32 sm:w-40 borde-pixel border-blanco bg-noche overflow-hidden">
-        <motion.div
+        <m.div
           className={`h-full ${color}`}
           initial={false}
           animate={{ width: `${pct}%` }}

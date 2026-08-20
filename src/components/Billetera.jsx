@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { pesos } from '../game/config.js'
 import { vibrar } from '../game/haptics.js'
 
@@ -26,7 +26,7 @@ export default function Billetera({ beca, mp, movimiento }) {
           💳 Beca Progresar
         </div>
         <AnimatePresence mode="popLayout">
-          <motion.div
+          <m.div
             key={beca}
             initial={{ scale: 1.15, x: -3 }}
             animate={{ scale: 1, x: 0 }}
@@ -35,13 +35,13 @@ export default function Billetera({ beca, mp, movimiento }) {
               text-3xl sm:text-5xl ${beca <= 0 ? 'text-rojo' : 'text-oro'}`}
           >
             {pesos(beca)}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
 
         {/* Plata volando */}
         <AnimatePresence>
           {floaters.map((f) => (
-            <motion.div
+            <m.div
               key={f.id}
               initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 0, y: -34 }}
@@ -53,7 +53,7 @@ export default function Billetera({ beca, mp, movimiento }) {
             >
               {f.monto < 0 ? '-' : '+'}
               {pesos(Math.abs(f.monto))}
-            </motion.div>
+            </m.div>
           ))}
         </AnimatePresence>
       </div>
@@ -64,7 +64,7 @@ export default function Billetera({ beca, mp, movimiento }) {
           Mercado Pago
         </div>
         <AnimatePresence mode="popLayout">
-          <motion.div
+          <m.div
             key={mp}
             initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
@@ -73,7 +73,7 @@ export default function Billetera({ beca, mp, movimiento }) {
             }`}
           >
             {pesos(mp)}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
     </div>

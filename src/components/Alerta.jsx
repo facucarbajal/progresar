@@ -1,11 +1,11 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 
 // Cartel de alerta que baja desde arriba (ej: el impreso trucho no se leyó).
 export default function Alerta({ mensaje, onCerrar }) {
   return (
     <AnimatePresence>
       {mensaje && (
-        <motion.div
+        <m.div
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
@@ -24,7 +24,7 @@ export default function Alerta({ mensaje, onCerrar }) {
               ✕
             </button>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   )

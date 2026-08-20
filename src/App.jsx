@@ -1,5 +1,5 @@
 import { useReducer } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion'
 import { estadoInicial, reducer } from './game/state.js'
 import Landing from './screens/Landing.jsx'
 import SeleccionCarrera from './screens/SeleccionCarrera.jsx'
@@ -40,27 +40,33 @@ export default function App() {
       pantalla = <Landing onJugar={() => dispatch({ tipo: 'IR_CARRERA' })} />
   }
 
+  // LazyMotion + los componentes `m` en vez de `motion`: carga sólo las
+  // features que el juego usa (animaciones, exit y gestos hover/tap) en vez del
+  // paquete completo de framer-motion. `strict` hace fallar el build si alguien
+  // vuelve a importar `motion`, que arrastraría todo de nuevo.
   return (
-    <div className="min-h-screen flex flex-col fondo-grilla">
-      {/* Título de Progresar siempre arriba de todo */}
-      <header className="sticky top-0 z-40 flex justify-center py-3 border-b border-blanco/10 bg-noche/80 backdrop-blur">
-        <LogoProgresar size="sm" />
-      </header>
+    <LazyMotion features={domAnimation} strict>
+      <div className="min-h-screen flex flex-col fondo-grilla">
+        {/* Título de Progresar siempre arriba de todo */}
+        <header className="sticky top-0 z-40 flex justify-center py-3 border-b border-blanco/10 bg-noche/80 backdrop-blur">
+          <LogoProgresar size="sm" />
+        </header>
 
-      <main className="flex-1 flex flex-col">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={estado.pantalla + '-' + estado.diaIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="flex-1 flex flex-col"
-          >
-            {pantalla}
-          </motion.div>
-        </AnimatePresence>
-      </main>
-    </div>
+        <main className="flex-1 flex flex-col">
+          <AnimatePresence mode="wait">
+            <m.div
+              key={estado.pantalla + '-' + estado.diaIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex-1 flex flex-col"
+            >
+              {pantalla}
+            </m.div>
+          </AnimatePresence>
+        </main>
+      </div>
+    </LazyMotion>
   )
 }

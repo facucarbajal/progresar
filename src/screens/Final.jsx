@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 import BotonPixel from '../components/BotonPixel.jsx'
 import LogoProgresar from '../components/LogoProgresar.jsx'
 import { pesos, BECA, BECA_ACTUALIZADA } from '../game/config.js'
@@ -55,7 +55,7 @@ export default function Final({ estado, dispatch }) {
       <AnimatePresence mode="wait">
         {paso === 1 ? (
           // ---------- PASO 1: tu partida ----------
-          <motion.div
+          <m.div
             key="paso1"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,10 +74,10 @@ export default function Final({ estado, dispatch }) {
             <BotonPixel variante="primario" onClick={() => setPaso(2)}>
               ▶ Seguir
             </BotonPixel>
-          </motion.div>
+          </m.div>
         ) : (
           // ---------- PASO 2: la bajada ----------
-          <motion.div
+          <m.div
             key="paso2"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -175,7 +175,7 @@ export default function Final({ estado, dispatch }) {
                 ↺ Volver a intentar
               </BotonPixel>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

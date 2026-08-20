@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import BotonPixel from './BotonPixel.jsx'
 import { pesos } from '../game/config.js'
 
@@ -9,7 +9,7 @@ export default function Transicion({ transicion, onContinuar }) {
 
   return (
     <div className="min-h-full flex items-center justify-center p-4">
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
@@ -65,7 +65,7 @@ export default function Transicion({ transicion, onContinuar }) {
         <BotonPixel variante="primario" onClick={onContinuar}>
           ▶ Seguir
         </BotonPixel>
-      </motion.div>
+      </m.div>
     </div>
   )
 }

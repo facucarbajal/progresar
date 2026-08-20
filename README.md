@@ -28,10 +28,20 @@ npm run build    # genera /dist
 npm run preview  # sirve /dist localmente
 ```
 
-## Deploy (Netlify)
+## Deploy (Cloudflare Pages)
 
-Ya viene configurado en `netlify.toml` (build `npm run build`, publish `dist`).
-Conectás el repo en Netlify y listo, o arrastrás la carpeta `dist`.
+El sitio vive en **https://progresar.pages.dev**. Cloudflare Pages está conectado
+a este repo: cada push a `main` dispara el build (`npm run build`, salida `dist`)
+y publica solo.
+
+La config de Pages son dos archivos en `public/`, que Vite copia tal cual a
+`dist/`:
+
+- `_headers` — headers de seguridad (CSP, `X-Frame-Options`, etc.). La CSP es
+  una lista blanca de los dominios que el sitio usa de verdad: si agregás un
+  script, una fuente o una API de otro dominio, hay que declararlo ahí o el
+  navegador lo bloquea.
+- `_redirects` — fallback de SPA: cualquier ruta cae en `index.html`.
 
 ## Cómo está armado
 

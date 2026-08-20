@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { pesos } from '../game/config.js'
 import BotonPixel from './BotonPixel.jsx'
 
@@ -15,7 +15,7 @@ export function ProductoCard({
   onComprar,
 }) {
   return (
-    <motion.div
+    <m.div
       layout
       className={`borde-pixel p-3 flex flex-col gap-2 bg-noche/60 ${
         comprado ? 'border-verde/70' : requerido ? 'border-oro/70' : 'border-blanco/40'
@@ -37,7 +37,7 @@ export function ProductoCard({
           Comprar <span className="opacity-90">·</span> {pesos(costo)}
         </BotonPixel>
       )}
-    </motion.div>
+    </m.div>
   )
 }
 

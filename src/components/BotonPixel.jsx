@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 
 const VARIANTES = {
   primario: 'bg-celeste text-noche border-blanco hover:bg-celeste/90',
@@ -18,7 +18,7 @@ export default function BotonPixel({
   ...props
 }) {
   return (
-    <motion.button
+    <m.button
       type="button"
       onClick={onClick}
       disabled={disabled}
@@ -31,6 +31,6 @@ export default function BotonPixel({
       {...props}
     >
       {children}
-    </motion.button>
+    </m.button>
   )
 }

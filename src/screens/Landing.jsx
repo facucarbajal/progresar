@@ -1,11 +1,11 @@
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import BotonPixel from '../components/BotonPixel.jsx'
 
 // Pantalla de inicio con el copy del pedido y el botón "Jugar".
 export default function Landing({ onJugar }) {
   return (
     <div className="min-h-full flex items-center justify-center p-4">
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -34,7 +34,7 @@ export default function Landing({ onJugar }) {
 
         <p className="text-sm italic text-blanco/50">O eso creés…</p>
 
-        <motion.div
+        <m.div
           animate={{ scale: [1, 1.03, 1] }}
           transition={{ duration: 2.5, repeat: Infinity }}
           className="borde-pixel border-blanco bg-naranja shadow-pixel px-5 py-3"
@@ -42,14 +42,14 @@ export default function Landing({ onJugar }) {
           <p className="font-sans font-extrabold text-sm sm:text-base text-noche">
             Objetivo: sobrevivir al primer mes de clases
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="mt-2">
           <BotonPixel variante="oro" onClick={onJugar} className="text-base px-8 py-4">
             ▶ JUGAR
           </BotonPixel>
         </div>
-      </motion.div>
+      </m.div>
     </div>
   )
 }

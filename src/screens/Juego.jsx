@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 import Billetera from '../components/Billetera.jsx'
 import BarraEnergia from '../components/BarraEnergia.jsx'
 import DialogBox from '../components/DialogBox.jsx'
@@ -115,7 +115,7 @@ export default function Juego({ estado, dispatch }) {
           <Billetera beca={estado.beca} mp={estado.mp} movimiento={estado.ultimoMovimiento} />
           <BarraEnergia energia={estado.energia} />
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             className="borde-pixel border-naranja bg-naranja/15 shadow-pixel-lg p-6 text-center flex flex-col gap-4"
@@ -127,7 +127,7 @@ export default function Juego({ estado, dispatch }) {
             <p className="text-lg sm:text-xl text-blanco leading-relaxed">
               Tus profesores no cobran hace 3 meses y hoy no dan clase.
             </p>
-          </motion.div>
+          </m.div>
 
           <BotonPixel
             variante="primario"
@@ -180,7 +180,7 @@ export default function Juego({ estado, dispatch }) {
 
         {/* Contenido del momento activo */}
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={momentoTipo + momentoIndex}
             initial={{ opacity: 0, x: 12 }}
             animate={{ opacity: 1, x: 0 }}
@@ -224,7 +224,7 @@ export default function Juego({ estado, dispatch }) {
                 ))}
               </Tienda>
             )}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
 
         {/* Changas y crédito (Mar/Mié/Jue y solo si gastaste más de la mitad) */}

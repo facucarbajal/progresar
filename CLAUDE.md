@@ -12,7 +12,18 @@ npm run preview    # sirve /dist localmente
 
 No hay tests, linter ni type-checking configurados. La verificación es manual: `npm run dev` y jugar la partida.
 
-Deploy: Netlify (`netlify.toml`, build `npm run build`, publish `dist`, redirect SPA a `/index.html`).
+## Deploy
+
+**Cloudflare Pages**, no Netlify: el sitio es https://progresar.pages.dev y cada push a `main` lo publica solo. Un `netlify.toml` estuvo versionado un tiempo sin efecto alguno — si lo ves reaparecer, es un error.
+
+La config de hosting son dos archivos en `public/` que Vite copia a `dist/`:
+
+- `public/_headers` — headers de seguridad. La **CSP es una lista blanca** de los dominios que el sitio usa (Google Fonts, el beacon de Cloudflare, `data:` para el favicon inline, `'unsafe-inline'` en `style-src` para framer-motion). Agregar un script, fuente o API de otro dominio sin declararlo ahí hace que el navegador lo bloquee en producción, aunque en `npm run dev` funcione perfecto — Vite no aplica estos headers.
+- `public/_redirects` — fallback de SPA.
+
+`Permissions-Policy` deja `vibrate` afuera a propósito: el game over usa `navigator.vibrate`.
+
+Para probar los headers antes de publicar, hay que servir `dist/` con un server que los mande (Vite no lo hace) y revisar la consola por violaciones de CSP.
 
 ## Qué es
 
@@ -60,3 +71,9 @@ Las scanlines de CRT viven dentro de `.fondo-grilla`, como capa de `background-i
 Las figuras recortadas de `public/` (`cfk.png`, `milei.png`, en el comparador del final) son PNG con alfa, pixelado mínimo y trazo blanco. `img { image-rendering: pixelated }` es global, así que escalan sin suavizarse.
 
 Mobile-first: el layout se prueba a ancho de teléfono primero (`max-w-2xl`, breakpoints `sm:`). `vibrar()` de `haptics.js` para feedback háptico en momentos fuertes.
+
+## framer-motion: usar `m`, nunca `motion`
+
+`App.jsx` envuelve todo en `<LazyMotion features={domAnimation} strict>` y los componentes se escriben `<m.div>` / `<m.button>`. Esto carga sólo animaciones, `exit` y gestos hover/tap en vez del paquete completo: importar `motion` vuelve a arrastrar ~40 KB. El flag `strict` hace fallar el render si alguien lo hace, así que el error aparece enseguida.
+
+`domAnimation` **no** incluye `drag` ni animaciones de `layout`/`layoutId`. Si algún día hacen falta, hay que pasar a `domMax` y asumir el peso.

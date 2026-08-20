@@ -1,9 +1,9 @@
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 
 // Caja de diálogo estilo RPG: borde grueso, fondo oscuro y triangulito parpadeante.
 export default function DialogBox({ children, className = '' }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
@@ -14,6 +14,6 @@ export default function DialogBox({ children, className = '' }) {
       {children}
       {/* Triangulito de "continuar" */}
       <span className="absolute bottom-2 right-3 text-celeste animate-blink">▼</span>
-    </motion.div>
+    </m.div>
   )
 }

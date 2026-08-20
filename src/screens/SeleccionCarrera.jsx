@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { CARRERAS } from '../game/carreras.js'
 import { pesos, BECA } from '../game/config.js'
 
@@ -35,7 +35,7 @@ export default function SeleccionCarrera({ onElegir }) {
           {CARRERAS.map((c, i) => {
             const acento = ACENTOS[c.id] ?? ACENTOS.ingenieria
             return (
-              <motion.button
+              <m.button
                 key={c.id}
                 type="button"
                 initial={{ opacity: 0, y: 12 }}
@@ -59,7 +59,7 @@ export default function SeleccionCarrera({ onElegir }) {
                     {c.nombre}
                   </span>
                 </span>
-              </motion.button>
+              </m.button>
             )
           })}
         </div>

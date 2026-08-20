@@ -18,14 +18,9 @@ export default function SeleccionCarrera({ onElegir }) {
   return (
     <div className="min-h-full flex items-center justify-center p-4">
       <div className="w-full max-w-3xl flex flex-col items-center gap-5">
-        <div className="flex flex-col items-center gap-2 text-center">
-          <h2 className="font-titulo text-2xl sm:text-3xl text-celeste sombra-texto">
-            ¿Qué vas a estudiar?
-          </h2>
-          <p className="text-sm text-blanco/60">
-            Elegí la carrera. Cada una te pide sus propios materiales.
-          </p>
-        </div>
+        <h2 className="font-titulo text-2xl sm:text-3xl text-celeste sombra-texto text-center">
+          ¿Qué vas a estudiar?
+        </h2>
 
         {/* Cartelito con la plata con la que arrancás */}
         <div className="borde-pixel border-oro/70 bg-oro/10 px-4 py-2 flex items-center gap-2">
@@ -62,9 +57,6 @@ export default function SeleccionCarrera({ onElegir }) {
                   </span>
                   <span className="font-sans font-extrabold text-sm sm:text-base text-blanco leading-tight">
                     {c.nombre}
-                  </span>
-                  <span className="text-[11px] text-blanco/50 leading-tight">
-                    Lunes: {c.materiales[0].materia}
                   </span>
                 </span>
               </motion.button>

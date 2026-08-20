@@ -12,7 +12,7 @@ const ENTERATE_URL = 'https://www.instagram.com/lacamporauniversidad/'
 
 // Cuánto compraba la beca en 2015 vs 2026. La primera fila es el monto.
 const COMPARACION = [
-  { item: '💵 La beca', y2015: pesos(BECA_ACTUALIZADA), y2026: pesos(BECA), destacado: true },
+  { item: '💵 Monto', y2015: pesos(BECA_ACTUALIZADA), y2026: pesos(BECA), destacado: true },
   { item: '🧉 Yerba', y2015: '36 kg', y2026: '6 kg' },
   { item: '🚌 Colectivo', y2015: '300 viajes', y2026: '35 viajes' },
   { item: '🍽️ Almuerzos', y2015: '22', y2026: '5' },
@@ -115,20 +115,12 @@ export default function Final({ estado, dispatch }) {
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
-                    <th className="w-1/3 pb-1 align-bottom">
-                      <img
-                        src="/cfk.png"
-                        alt="Cristina Fernández de Kirchner"
-                        className="h-20 sm:h-24 w-auto mx-auto"
-                      />
+                    <th className="w-1/3 pb-2 align-bottom font-titulo text-sm sm:text-base text-oro uppercase leading-tight">
+                      Con Cristina
                     </th>
                     <th className="w-1/3" />
-                    <th className="w-1/3 pb-1 align-bottom">
-                      <img
-                        src="/milei.png"
-                        alt="Javier Milei"
-                        className="h-24 sm:h-28 w-auto mx-auto"
-                      />
+                    <th className="w-1/3 pb-2 align-bottom font-titulo text-sm sm:text-base text-naranja uppercase leading-tight">
+                      Con Milei
                     </th>
                   </tr>
                   <tr className="font-titulo text-sm">

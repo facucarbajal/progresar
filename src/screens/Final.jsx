@@ -8,10 +8,11 @@ import { disponible } from '../game/state.js'
 import { textoFinal } from '../game/mensajes.js'
 import { vibrar } from '../game/haptics.js'
 
-const ENTERATE_URL = 'https://www.argentina.gob.ar/educacion/progresar'
+const ENTERATE_URL = 'https://www.instagram.com/lacamporauniversidad/'
 
-// Cuánto compraba la beca en 2015 vs 2026.
+// Cuánto compraba la beca en 2015 vs 2026. La primera fila es el monto.
 const COMPARACION = [
+  { item: '💵 La beca', y2015: pesos(BECA_ACTUALIZADA), y2026: pesos(BECA), destacado: true },
   { item: '🧉 Yerba', y2015: '36 kg', y2026: '6 kg' },
   { item: '🚌 Colectivo', y2015: '300 viajes', y2026: '35 viajes' },
   { item: '🍽️ Almuerzos', y2015: '22', y2026: '5' },
@@ -106,10 +107,31 @@ export default function Final({ estado, dispatch }) {
             </div>
 
             {/* Comparador 2015 vs 2026 */}
-            <div className="w-full borde-pixel border-celeste/60 bg-noche/60 p-4">
+            <div className="w-full borde-pixel border-celeste/60 bg-noche/60 p-4 flex flex-col gap-3">
+              <h2 className="font-titulo text-lg sm:text-xl text-blanco text-center leading-tight">
+                ¿Para cuánto alcanza el Progresar?
+              </h2>
+
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="font-pixel text-xs">
+                  <tr>
+                    <th className="w-1/3 pb-1 align-bottom">
+                      <img
+                        src="/cfk.png"
+                        alt="Cristina Fernández de Kirchner"
+                        className="h-20 sm:h-24 w-auto mx-auto"
+                      />
+                    </th>
+                    <th className="w-1/3" />
+                    <th className="w-1/3 pb-1 align-bottom">
+                      <img
+                        src="/milei.png"
+                        alt="Javier Milei"
+                        className="h-24 sm:h-28 w-auto mx-auto"
+                      />
+                    </th>
+                  </tr>
+                  <tr className="font-titulo text-sm">
                     <th className="text-oro py-1 border border-blanco/15">2015</th>
                     <th className="text-blanco/60 py-1 border border-blanco/15" />
                     <th className="text-naranja py-1 border border-blanco/15">2026</th>
@@ -118,13 +140,21 @@ export default function Final({ estado, dispatch }) {
                 <tbody>
                   {COMPARACION.map((f) => (
                     <tr key={f.item} className="text-sm">
-                      <td className="font-pixel text-oro tabular-nums text-center py-1.5 border border-blanco/15">
+                      <td
+                        className={`font-titulo tabular-nums text-center py-1.5 border border-blanco/15 ${
+                          f.destacado ? 'text-blanco text-base' : 'text-oro'
+                        }`}
+                      >
                         {f.y2015}
                       </td>
                       <td className="text-blanco/90 text-center py-1.5 border border-blanco/15">
                         {f.item}
                       </td>
-                      <td className="font-pixel text-naranja tabular-nums text-center py-1.5 border border-blanco/15">
+                      <td
+                        className={`font-titulo tabular-nums text-center py-1.5 border border-blanco/15 ${
+                          f.destacado ? 'text-blanco text-base' : 'text-naranja'
+                        }`}
+                      >
                         {f.y2026}
                       </td>
                     </tr>

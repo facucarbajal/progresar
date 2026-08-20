@@ -19,13 +19,18 @@ export default function Landing({ onJugar }) {
           Entraste a la facultad.
         </h1>
 
-        <p className="text-sm sm:text-base leading-relaxed text-blanco/90 max-w-xl">
-          Primer día de cursada, te pidieron un millón de materiales y
-          cuadernillos, no tenés un peso y olvidate de pedirle a tus viejos. Por
-          suerte, el gobierno te da una{' '}
-          <span className="font-pixel text-celeste">Beca Progresar</span> para que
-          puedas comprarte todo lo que necesitás.
-        </p>
+        <div className="flex flex-col gap-3 max-w-xl">
+          <p className="text-sm sm:text-base leading-relaxed text-blanco/90">
+            Primer día de cursada, te pidieron un millón de materiales y
+            cuadernillos, no tenés un peso y olvidate de pedirle a tus viejos.
+          </p>
+
+          <p className="text-sm sm:text-base leading-relaxed text-blanco/90">
+            Por suerte, el gobierno te da una{' '}
+            <span className="font-titulo text-celeste">Beca Progresar</span> para que
+            puedas comprarte todo lo que necesitás.
+          </p>
+        </div>
 
         <p className="text-sm italic text-blanco/50">O eso creés…</p>
 
@@ -34,7 +39,7 @@ export default function Landing({ onJugar }) {
           transition={{ duration: 2.5, repeat: Infinity }}
           className="borde-pixel border-blanco bg-naranja shadow-pixel px-5 py-3"
         >
-          <p className="font-pixel text-xs sm:text-sm text-blanco">
+          <p className="font-sans font-extrabold text-sm sm:text-base text-noche">
             Objetivo: sobrevivir al primer mes de clases
           </p>
         </motion.div>

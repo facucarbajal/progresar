@@ -24,7 +24,7 @@ export default function BotonPixel({
       disabled={disabled}
       whileHover={disabled ? {} : { y: -2 }}
       whileTap={disabled ? {} : { y: 2 }}
-      className={`borde-pixel font-pixel text-[10px] sm:text-xs leading-relaxed
+      className={`borde-pixel font-sans font-extrabold text-sm sm:text-base leading-snug
         px-4 py-3 shadow-pixel select-none transition-colors
         disabled:opacity-40 disabled:cursor-not-allowed
         ${VARIANTES[variante]} ${className}`}

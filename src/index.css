@@ -44,28 +44,24 @@
     text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
   }
 
-  /* Fondo con grilla sutil de "cuaderno" */
+  /* Fondo con grilla sutil de "cuaderno" + scanlines de CRT.
+     Van como background del contenedor (detrás del contenido) y NO como overlay:
+     encima de botones y carteles claros arruinaban la lectura. */
   .fondo-grilla {
     background-image:
+      repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.16) 3px,
+        rgba(0, 0, 0, 0.16) 4px
+      ),
       linear-gradient(rgba(65, 166, 246, 0.06) 1px, transparent 1px),
       linear-gradient(90deg, rgba(65, 166, 246, 0.06) 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
-
-  /* Scanlines suaves para dar textura de CRT */
-  .scanlines::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0,
-      rgba(0, 0, 0, 0) 2px,
-      rgba(0, 0, 0, 0.08) 3px,
-      rgba(0, 0, 0, 0.08) 4px
-    );
-    z-index: 50;
+    background-size:
+      100% 4px,
+      24px 24px,
+      24px 24px;
   }
 }
 

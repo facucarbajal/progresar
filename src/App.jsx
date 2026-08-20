@@ -41,7 +41,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col fondo-grilla scanlines">
+    <div className="min-h-screen flex flex-col fondo-grilla">
       {/* Título de Progresar siempre arriba de todo */}
       <header className="sticky top-0 z-40 flex justify-center py-3 border-b border-blanco/10 bg-noche/80 backdrop-blur">
         <LogoProgresar size="sm" />

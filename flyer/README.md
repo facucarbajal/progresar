@@ -5,9 +5,9 @@ PNG listos para publicar:
 - `progresar-flyer-1080x1350.png` — feed (Instagram / Twitter).
 - `progresar-flyer-1080x1920.png` — story.
 
-Los `.html` son la fuente: paleta y tipografías del juego (Archivo Black + Nunito
-embebidas en base64, así renderiza sin internet), grilla y scanlines de
-`.fondo-grilla`, y los stickers de `public/cfk.png` / `public/milei.png` inline.
+Los `.html` son la fuente: paleta del juego, todo el texto en Archivo Black
+(embebida en base64, así renderiza sin internet) y la grilla + scanlines de
+`.fondo-grilla`.
 
 Para regenerar después de editar el HTML:
 

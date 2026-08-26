@@ -124,10 +124,20 @@ export default function Final({ estado, dispatch }) {
                   <tr>
                     <th className="w-1/3 pb-2 align-bottom font-titulo text-xs sm:text-base text-oro uppercase leading-tight">
                       Con Cristina
+                      <img
+                        src="/cfk.png"
+                        alt=""
+                        className="sm:hidden w-20 mx-auto mt-1 select-none pointer-events-none"
+                      />
                     </th>
                     <th className="w-1/3" />
                     <th className="w-1/3 pb-2 align-bottom font-titulo text-xs sm:text-base text-naranja uppercase leading-tight">
                       Con Milei
+                      <img
+                        src="/milei.png"
+                        alt=""
+                        className="sm:hidden w-20 mx-auto mt-1 select-none pointer-events-none"
+                      />
                     </th>
                   </tr>
                   <tr className="font-titulo text-xs sm:text-sm">

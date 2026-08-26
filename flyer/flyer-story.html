@@ -10,23 +10,31 @@ body{background:#1a1c2c;color:#f4f4f4;
   linear-gradient(rgba(65,166,246,.07) 2px,transparent 2px),
   linear-gradient(90deg,rgba(65,166,246,.07) 2px,transparent 2px);
   background-size:100% 8px,48px 48px,48px 48px}
-.vinieta{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(59,93,201,.30),transparent 62%)}
 .marco{position:relative;width:1010px;height:1660px;border:8px solid rgba(244,244,244,.9);
   box-shadow:0 10px 0 0 rgba(0,0,0,.4);background:rgba(41,54,111,.35);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;gap:52px;padding:64px}
-.emoji{font-size:200px;line-height:1;filter:drop-shadow(0 8px 0 rgba(0,0,0,.35))}
-h1{font-size:132px;line-height:.95;letter-spacing:-.02em;color:#ffcd75;
-  text-shadow:6px 6px 0 rgba(0,0,0,.6)}
-.bajada{font-size:34px;line-height:1.35;color:rgba(244,244,244,.94);white-space:nowrap}
+  text-align:center;gap:48px;padding:64px}
+.emoji{font-size:180px;line-height:1;filter:drop-shadow(0 8px 0 rgba(0,0,0,.35))}
+/* Wordmark progre$ar+ : el celeste del juego va en blanco acá */
+.logo{font-size:126px;line-height:1;letter-spacing:-.03em;
+  display:inline-flex;align-items:baseline;white-space:nowrap}
+.logo .s{text-shadow:5px 5px 0 rgba(0,0,0,.6)}
+.logo .blanco{color:#f4f4f4}
+.logo .oro{color:#ffcd75}
+.logo .mas{color:#ef7d57;font-size:.5em;vertical-align:super;margin-left:.04em}
+.bajada{font-size:32px;line-height:1.4;color:rgba(244,244,244,.94);max-width:880px}
+.chapa{border:6px solid #f4f4f4;background:#ef7d57;box-shadow:0 8px 0 0 rgba(0,0,0,.4);
+  padding:24px 44px}
+.chapa p{font-size:29px;color:#1a1c2c;line-height:1.25}
 .link{border:6px solid #1a1c2c;background:#ffcd75;box-shadow:0 8px 0 0 rgba(0,0,0,.45);
-  padding:26px 48px;font-size:46px;color:#1a1c2c;white-space:nowrap;margin-top:24px}
+  padding:24px 44px;font-size:44px;color:#1a1c2c;white-space:nowrap;margin-top:18px}
 </style></head><body>
-<div class="grilla"></div><div class="vinieta"></div>
+<div class="grilla"></div>
 <div class="marco">
   <div class="emoji">&#127891;</div>
-  <h1>PROGRESAR</h1>
-  <p class="bajada">Entrás a la facu con $28.000 de beca.<br>Sobreviví la semana.</p>
+  <div class="logo"><span class="s blanco">progre</span><span class="s oro">$</span><span class="s blanco">ar</span><span class="mas">+</span></div>
+  <p class="bajada">&iexcl;Felicitaciones! Entraste a la universidad<br>y el gobierno te dio una beca Progresar.</p>
+  <div class="chapa"><p>Objetivo: sobrevivir al primer mes de clases</p></div>
   <div class="link">progresar.pages.dev</div>
 </div>
 </body></html>

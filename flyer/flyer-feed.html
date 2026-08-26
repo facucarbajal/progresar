@@ -10,31 +10,47 @@ body{background:#1a1c2c;color:#f4f4f4;
   linear-gradient(rgba(65,166,246,.07) 2px,transparent 2px),
   linear-gradient(90deg,rgba(65,166,246,.07) 2px,transparent 2px);
   background-size:100% 8px,48px 48px,48px 48px}
-.marco{position:relative;width:1010px;height:1280px;border:8px solid rgba(244,244,244,.9);
-  box-shadow:0 10px 0 0 rgba(0,0,0,.4);background:rgba(41,54,111,.35);
+.marco{position:relative;width:1010px;height:1280px;border:6px solid rgba(244,244,244,.9);
+  box-shadow:0 6px 0 0 rgba(0,0,0,.4);background:rgba(41,54,111,.35);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;gap:38px;padding:52px}
-.emoji{font-size:150px;line-height:1;filter:drop-shadow(0 8px 0 rgba(0,0,0,.35))}
+  text-align:center;gap:30px;padding:48px}
+/* Emojis sueltos girados, como stickers pegados en el borde del cartel */
+.deco{position:absolute;font-size:64px;line-height:1;opacity:.9;
+  filter:drop-shadow(0 4px 0 rgba(0,0,0,.35));pointer-events:none}
+.d1{top:26px;left:26px;transform:rotate(-14deg)}
+.d2{top:26px;right:26px;transform:rotate(12deg)}
+.d3{bottom:26px;left:26px;transform:rotate(10deg)}
+.d4{bottom:26px;right:26px;transform:rotate(-11deg)}
+.emoji{font-size:120px;line-height:1;filter:drop-shadow(0 8px 0 rgba(0,0,0,.35))}
 /* Wordmark progre$ar+ : el celeste del juego va en blanco acá */
-.logo{font-size:118px;line-height:1;letter-spacing:-.03em;
+.logo{font-size:110px;line-height:1;letter-spacing:-.03em;
   display:inline-flex;align-items:baseline;white-space:nowrap}
 .logo .s{text-shadow:5px 5px 0 rgba(0,0,0,.6)}
 .logo .blanco{color:#f4f4f4}
 .logo .oro{color:#ffcd75}
 .logo .mas{color:#ef7d57;font-size:.5em;vertical-align:super;margin-left:.04em}
-.bajada{font-size:30px;line-height:1.4;color:rgba(244,244,244,.94);max-width:880px}
-.chapa{border:6px solid #f4f4f4;background:#ef7d57;box-shadow:0 8px 0 0 rgba(0,0,0,.4);
-  padding:22px 40px}
-.chapa p{font-size:27px;color:#1a1c2c;line-height:1.25}
-.link{border:6px solid #1a1c2c;background:#ffcd75;box-shadow:0 8px 0 0 rgba(0,0,0,.45);
-  padding:22px 40px;font-size:42px;color:#1a1c2c;white-space:nowrap;margin-top:12px}
+.bajada{font-size:29px;line-height:1.4;color:rgba(244,244,244,.94)}
+.chapa{border:6px solid #f4f4f4;background:#ef7d57;box-shadow:0 6px 0 0 rgba(0,0,0,.4);
+  padding:20px 38px}
+.chapa p{font-size:26px;color:#1a1c2c;line-height:1.25}
+.qr{margin-top:6px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.qr img{width:250px;height:250px;display:block;border:6px solid #1a1c2c;
+  box-shadow:0 6px 0 0 rgba(0,0,0,.45);image-rendering:pixelated}
+.qr span{font-size:22px;color:rgba(244,244,244,.75)}
 </style></head><body>
 <div class="grilla"></div>
 <div class="marco">
+  <span class="deco d1">&#128184;</span>
+  <span class="deco d2">&#128218;</span>
+  <span class="deco d3">&#129481;</span>
+  <span class="deco d4">&#128652;</span>
   <div class="emoji">&#127891;</div>
   <div class="logo"><span class="s blanco">progre</span><span class="s oro">$</span><span class="s blanco">ar</span><span class="mas">+</span></div>
   <p class="bajada">&iexcl;Felicitaciones! Entraste a la universidad<br>y el gobierno te dio una beca Progresar.</p>
   <div class="chapa"><p>Objetivo: sobrevivir al primer mes de clases</p></div>
-  <div class="link">progresar.pages.dev</div>
+  <div class="qr">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA3gAAAN4AQMAAACroNgNAAAABlBMVEUaHCz/zXWofepqAAAC3UlEQVR42u3dwU7DMBBF0RH//8+wQKpMPPOcFlSxOFlUpUQ5C2+unNipz/cexePxeDwej8fj8Xg8Ho/H4/F4PB6Px+PxeDwej8fj8Xg8Ho/H+zuvuuP798cJ65f9nOkKj+Oj3nvweDwej8fj8f6Xd+3Pa552/bmm5volXEF/8ng8Ho/H4/Gm/lz/tX+GLg1X0J88Ho/H4/F4vBf6c+3M9Rz9yePxeDwej8f72/6sbiJUf/J4PB6Px+Pxft+f0y8VnwX1/CePx+PxeDwe74X+bE946jMTxo/H4/F4PB5Pf543afo5C7p26c0r6E8ej8fj8Xg8XluPa1u2hVn31sVPhPHj8Xg8Ho/H05/t3Ob0e80r4vPzovqTx+PxeDwej1enu+cV1x+FWN2/608ej8fj8Xg8Xq7HvDQp/z4thzd+PB6Px+PxePozz3BOFdoW5uNfNcysGj8ej8fj8Xg8/RlWD7Vbyud3bta2WF5/8ng8Ho/H4/Ha/my3WmrXs1/q9OaKJP3J4/F4PB6Ppz/D7fUabsfXdvO9hlv2O2H8eDwej8fj8fRnWPneNufUrjlN9SePx+PxeDwer077z4dZzYrbMdWwfb3x4/F4PB6Px9Of05KiMKs5PSN63CDU+PF4PB6Px+Ppz7zh/PT+o/Bn2ALU+PF4PB6Px+Ppz+P+n6E2a9iIfnqs1PjxeDwej8fj6c/jUaddmKaJU/OfPB6Px+PxeLzQn9MJ65fwas7LDGpLGD8ej8fj8Xg8/Rle1173lr3nOU/9yePxeDwej8cL/bl3Zlue02zn5cpl/pPH4/F4PB6P92R/TmuRLmfW8BYk/cnj8Xg8Ho/He6o/pwqtYfFRW7D6k8fj8Xg8Ho9X957/3GuzbqyIby9o/Hg8Ho/H4/H053H9e3gjfM7OnTB+PB6Px+PxePrznQePx+PxeDwej8fj8Xg8Ho/H4/F4PB6Px+PxeDwej8fj8Xg8Hu93xxfFiYqiyKVkbwAAAABJRU5ErkJggg==" alt="QR a progresar.pages.dev">
+    <span>Escane&aacute;lo y jugá</span>
+  </div>
 </div>
 </body></html>

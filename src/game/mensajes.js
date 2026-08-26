@@ -44,6 +44,14 @@ const REMATES = {
     'Ibas a construir puentes. Terminaste cruzando el mostrador.',
     'Calculaste todo menos la inflación.',
   ],
+  psicologia: [
+    'Analizás a todo el mundo menos a tu cuenta bancaria.',
+    'Tanto hablar del deseo y lo único que deseás es un sueldo.',
+  ],
+  medicina: [
+    'Ibas a salvar vidas. Empezá por la tuya.',
+    'La única guardia que vas a hacer es la del turno noche del kiosco.',
+  ],
 }
 
 function remateAlAzar(carreraId) {

@@ -1,4 +1,4 @@
-// Las 6 carreras jugables. Cada una define el cuadernillo/apunte que te piden
+// Las 8 carreras jugables. Cada una define el cuadernillo/apunte que te piden
 // cada día (Lunes a Viernes), siempre material IMPRIMIBLE para que tenga sentido
 // la opción "original" vs "imprimir trucho".
 //
@@ -27,7 +27,7 @@ export const CARRERAS = [
   },
   {
     id: 'economia',
-    nombre: 'Economía',
+    nombre: 'Ciencias Económicas',
     emoji: '📈',
     materiales: [
       mat('Apunte de Microeconomía', 'Micro I', 13000),
@@ -51,7 +51,7 @@ export const CARRERAS = [
   },
   {
     id: 'biologia',
-    nombre: 'Biología',
+    nombre: 'Ciencias Exactas',
     emoji: '🧬',
     materiales: [
       mat('Apunte de Biología Celular', 'Biología Celular', 13000),
@@ -63,7 +63,7 @@ export const CARRERAS = [
   },
   {
     id: 'cs-politica',
-    nombre: 'Ciencia Política',
+    nombre: 'Ciencias Sociales y Humanidades',
     emoji: '🏛️',
     materiales: [
       mat('Cuadernillo de Teoría Política', 'Teoría Política', 12000),
@@ -83,6 +83,30 @@ export const CARRERAS = [
       mat('Apunte de Física', 'Física I', 12000),
       mat('Fotocopias de Álgebra', 'Álgebra', 11000),
       mat('Cuadernillo de Química', 'Química', 10000),
+    ],
+  },
+  {
+    id: 'psicologia',
+    nombre: 'Psicología',
+    emoji: '🧠',
+    materiales: [
+      mat('Fotocopias de Freud', 'Psicoanálisis I', 12000),
+      mat('Apunte de Psicología Evolutiva', 'Evolutiva', 10000),
+      mat('Guía de Estadística', 'Estadística', 9000),
+      mat('Cuadernillo de Neuroanatomía', 'Neuroanatomía', 14000),
+      mat('Apunte de Clínica', 'Clínica I', 11000),
+    ],
+  },
+  {
+    id: 'medicina',
+    nombre: 'Medicina',
+    emoji: '🩺',
+    materiales: [
+      mat('Atlas de Anatomía', 'Anatomía', 15000),
+      mat('Cuadernillo de Histología', 'Histología', 11000),
+      mat('Apunte de Fisiología', 'Fisiología', 13000),
+      mat('Fotocopias de Bioquímica', 'Bioquímica', 10000),
+      mat('Guía de Semiología', 'Semiología', 12000),
     ],
   },
 ]

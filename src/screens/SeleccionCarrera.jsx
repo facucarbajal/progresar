@@ -11,13 +11,15 @@ const ACENTOS = {
   biologia: { barra: 'bg-celeste', halo: 'group-hover:border-celeste' },
   'cs-politica': { barra: 'bg-naranja', halo: 'group-hover:border-naranja' },
   ingenieria: { barra: 'bg-blanco', halo: 'group-hover:border-blanco' },
+  psicologia: { barra: 'bg-violeta', halo: 'group-hover:border-violeta' },
+  medicina: { barra: 'bg-rojo', halo: 'group-hover:border-rojo' },
 }
 
 // Grilla para elegir la carrera.
 export default function SeleccionCarrera({ onElegir }) {
   return (
     <div className="min-h-full flex items-center justify-center p-4">
-      <div className="w-full max-w-3xl flex flex-col items-center gap-5">
+      <div className="w-full max-w-4xl flex flex-col items-center gap-5">
         <h2 className="font-titulo text-2xl sm:text-3xl text-celeste sombra-texto text-center">
           ¿Qué vas a estudiar?
         </h2>
@@ -31,7 +33,7 @@ export default function SeleccionCarrera({ onElegir }) {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full">
           {CARRERAS.map((c, i) => {
             const acento = ACENTOS[c.id] ?? ACENTOS.ingenieria
             return (
@@ -52,10 +54,10 @@ export default function SeleccionCarrera({ onElegir }) {
                 <span className={`h-1.5 w-full ${acento.barra}`} />
 
                 <span className="flex flex-col items-center gap-2 px-3 py-4">
-                  <span className="text-4xl sm:text-5xl drop-shadow-[0_3px_0_rgba(0,0,0,0.4)]">
+                  <span className="text-3xl sm:text-4xl drop-shadow-[0_3px_0_rgba(0,0,0,0.4)]">
                     {c.emoji}
                   </span>
-                  <span className="font-sans font-extrabold text-sm sm:text-base text-blanco leading-tight">
+                  <span className="font-sans font-extrabold text-xs sm:text-sm text-blanco leading-tight text-balance">
                     {c.nombre}
                   </span>
                 </span>

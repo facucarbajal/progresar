@@ -112,11 +112,11 @@ export default function Final({ estado, dispatch }) {
                 ¿Para cuánto alcanza el Progresar?
               </h2>
 
-              <div className="flex items-end justify-center gap-1 sm:gap-3">
+              <div className="flex items-center justify-center gap-3">
                 <img
                   src="/cfk.png"
                   alt="Cristina Fernández de Kirchner"
-                  className="w-14 sm:w-32 shrink-0 select-none pointer-events-none"
+                  className="hidden sm:block w-32 shrink-0 select-none pointer-events-none"
                 />
 
                 <table className="flex-1 min-w-0 border-collapse">
@@ -164,7 +164,7 @@ export default function Final({ estado, dispatch }) {
                 <img
                   src="/milei.png"
                   alt="Javier Milei"
-                  className="w-14 sm:w-32 shrink-0 select-none pointer-events-none"
+                  className="hidden sm:block w-32 shrink-0 select-none pointer-events-none"
                 />
               </div>
             </div>

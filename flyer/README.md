@@ -3,8 +3,12 @@
 ## Para imprimir y volantear
 
 Van en **blanco y negro**, pensados para fotocopiadora: fondo blanco, tinta negra,
-sin las scanlines del CRT (en láser se empastan y se comen el tóner). El único
-bloque de tinta plena es el cartel del objetivo, invertido.
+sin las scanlines del CRT (en láser se empastan y se comen el tóner). Lo que sí
+queda es la trama cuadriculada — la grilla de cuaderno (fina cada 24 px, gruesa
+cada 96) más una cenefa de damero arriba y abajo —, porque en B/N el fondo liso
+queda chato. Un velo blanco con máscara radial la desvanece detrás del texto para
+no comerle legibilidad. Los únicos bloques de tinta plena son el cartel del
+objetivo (invertido) y el damero.
 
 - `progresar-volante-A4-2up.pdf` — **el que se manda a imprimir**: A4 apaisado
   (297×210 mm) con dos volantes A5 iguales y una guía de corte punteada al medio.

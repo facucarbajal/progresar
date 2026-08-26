@@ -2,10 +2,16 @@
 
 ## Para imprimir y volantear
 
+Van en **blanco y negro**, pensados para fotocopiadora: fondo blanco, tinta negra,
+sin las scanlines del CRT (en láser se empastan y se comen el tóner). El único
+bloque de tinta plena es el cartel del objetivo, invertido.
+
 - `progresar-volante-A4-2up.pdf` — **el que se manda a imprimir**: A4 apaisado
   (297×210 mm) con dos volantes A5 iguales y una guía de corte punteada al medio.
   Imprimir a tamaño real (*escala 100%*, no "ajustar a la página") y cortar por la línea.
 - `progresar-volante-A5.pdf` / `.png` — un volante suelto, A5 (148,5×210 mm) a 300 dpi.
+
+Los flyers de redes siguen a color; el que cambia de paleta es sólo `flyer-a5.html`.
 
 ## Para redes
 
@@ -19,8 +25,10 @@ Archivo Black (embebida en base64, así renderiza sin internet), el wordmark
 `progre$ar+` con el celeste pasado a blanco, la grilla + scanlines de
 `.fondo-grilla` y el QR inline.
 
-`qr-progresar.png` apunta a https://progresar.pages.dev (nivel de corrección Q,
-zona de silencio de 4 módulos). Si cambia el dominio hay que regenerarlo:
+`qr-progresar.png` (oro/noche, para redes) y `qr-progresar-bn.png` (negro sobre
+blanco, para el impreso) apuntan a https://progresar.pages.dev, con nivel de
+corrección Q y zona de silencio de 4 módulos. Si cambia el dominio hay que
+regenerarlos:
 
 ```bash
 python3 -c "import segno; segno.make('https://TU-DOMINIO', error='q').save('flyer/qr-progresar.png', scale=24, border=4, dark='#1a1c2c', light='#ffcd75')"

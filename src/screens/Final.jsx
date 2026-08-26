@@ -83,9 +83,9 @@ export default function Final({ estado, dispatch }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.3 }}
-            className="w-full max-w-xl flex flex-col items-center text-center gap-5"
+            className="w-full max-w-xl sm:max-w-3xl flex flex-col items-center text-center gap-5"
           >
-            <div className="borde-pixel border-blanco bg-pizarra/70 shadow-pixel p-4 sm:p-5 flex flex-col gap-4 text-left">
+            <div className="w-full max-w-xl borde-pixel border-blanco bg-pizarra/70 shadow-pixel p-4 sm:p-5 flex flex-col gap-4 text-left">
               <LogoProgresar size="md" className="justify-center" />
 
               <p className="text-[15px] leading-relaxed text-blanco">
@@ -106,35 +106,42 @@ export default function Final({ estado, dispatch }) {
               </p>
             </div>
 
-            {/* Comparador 2015 vs 2026 */}
-            <div className="w-full borde-pixel border-celeste/60 bg-noche/60 p-4 flex flex-col gap-3">
+            {/* Comparador 2015 vs 2026, flanqueado por las figuras recortadas */}
+            <div className="w-full borde-pixel border-celeste/60 bg-noche/60 p-3 sm:p-4 flex flex-col gap-3">
               <h2 className="font-titulo text-lg sm:text-xl text-blanco text-center leading-tight">
                 ¿Para cuánto alcanza el Progresar?
               </h2>
 
-              <table className="w-full border-collapse">
-                <thead>
+              <div className="flex items-end justify-center gap-1 sm:gap-3">
+                <img
+                  src="/cfk.png"
+                  alt="Cristina Fernández de Kirchner"
+                  className="w-14 sm:w-32 shrink-0 select-none pointer-events-none"
+                />
+
+                <table className="flex-1 min-w-0 border-collapse">
+                  <thead>
                   <tr>
-                    <th className="w-1/3 pb-2 align-bottom font-titulo text-sm sm:text-base text-oro uppercase leading-tight">
+                    <th className="w-1/3 pb-2 align-bottom font-titulo text-xs sm:text-base text-oro uppercase leading-tight">
                       Con Cristina
                     </th>
                     <th className="w-1/3" />
-                    <th className="w-1/3 pb-2 align-bottom font-titulo text-sm sm:text-base text-naranja uppercase leading-tight">
+                    <th className="w-1/3 pb-2 align-bottom font-titulo text-xs sm:text-base text-naranja uppercase leading-tight">
                       Con Milei
                     </th>
                   </tr>
-                  <tr className="font-titulo text-sm">
+                  <tr className="font-titulo text-xs sm:text-sm">
                     <th className="text-oro py-1 border border-blanco/15">2015</th>
                     <th className="text-blanco/60 py-1 border border-blanco/15" />
                     <th className="text-naranja py-1 border border-blanco/15">2026</th>
                   </tr>
-                </thead>
-                <tbody>
+                  </thead>
+                  <tbody>
                   {COMPARACION.map((f) => (
-                    <tr key={f.item} className="text-sm">
+                    <tr key={f.item} className="text-xs sm:text-sm">
                       <td
                         className={`font-titulo tabular-nums text-center py-1.5 border border-blanco/15 ${
-                          f.destacado ? 'text-blanco text-base' : 'text-oro'
+                          f.destacado ? 'text-blanco text-sm sm:text-base' : 'text-oro'
                         }`}
                       >
                         {f.y2015}
@@ -144,15 +151,22 @@ export default function Final({ estado, dispatch }) {
                       </td>
                       <td
                         className={`font-titulo tabular-nums text-center py-1.5 border border-blanco/15 ${
-                          f.destacado ? 'text-blanco text-base' : 'text-naranja'
+                          f.destacado ? 'text-blanco text-sm sm:text-base' : 'text-naranja'
                         }`}
                       >
                         {f.y2026}
                       </td>
                     </tr>
                   ))}
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+
+                <img
+                  src="/milei.png"
+                  alt="Javier Milei"
+                  className="w-14 sm:w-32 shrink-0 select-none pointer-events-none"
+                />
+              </div>
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-3">

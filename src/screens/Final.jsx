@@ -9,6 +9,8 @@ import { textoFinal } from '../game/mensajes.js'
 import { vibrar } from '../game/haptics.js'
 
 const ENTERATE_URL = 'https://www.instagram.com/lacamporauniversidad/'
+const FIRMA_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSegHxXgYaHiNyGiA0msp6zdMHcYl5PZ7o_260pRUv3PihKXKQ/viewform'
 
 // Cuánto compraba la beca en 2015 vs 2026. La primera fila es el monto.
 const COMPARACION = [
@@ -45,9 +47,6 @@ export default function Final({ estado, dispatch }) {
     BECA,
   )} y no se actualiza hace 2 años. Jugá vos:`
   const url = typeof window !== 'undefined' ? window.location.href : ''
-  const twitter = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    textoCompartir,
-  )}&url=${encodeURIComponent(url)}`
   const whatsapp = `https://wa.me/?text=${encodeURIComponent(textoCompartir + ' ' + url)}`
 
   return (
@@ -180,8 +179,8 @@ export default function Final({ estado, dispatch }) {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <a href={twitter} target="_blank" rel="noopener noreferrer">
-                <BotonPixel variante="primario">Compartir en X</BotonPixel>
+              <a href={FIRMA_URL} target="_blank" rel="noopener noreferrer">
+                <BotonPixel variante="primario">¡Sumá tu firma!</BotonPixel>
               </a>
               <a href={whatsapp} target="_blank" rel="noopener noreferrer">
                 <BotonPixel variante="comprar">WhatsApp</BotonPixel>
